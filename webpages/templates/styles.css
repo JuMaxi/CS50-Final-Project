@@ -71,7 +71,7 @@ body {
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    background-color: rgba(250, 235, 215, 0.349);
+    background-color: rgba(131, 186, 254, 0.202);
 }
 
 img.cardMain {
@@ -103,7 +103,7 @@ img.cardMain {
     border-radius: 2px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    background-color: rgba(128, 128, 128, 0.158);
+    background-color: rgba(16, 76, 13, 0.37);
     margin-top: 10px;
 }
 
@@ -191,11 +191,26 @@ img.cardMainSecond {
 
 #curiosities, 
 #reviews,
-#sustainability,
-#helpme,
-#anothertext{
+#sustainability{
     color: #8B4513;
     font-size: 1.1rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+h2 > a {
+    color: rgba(1, 36, 1, 0.801);
+}
+
+h2 > a:hover {
+    color: rgba(1, 36, 1, 0.801);
+    text-decoration: none;
 }
 
 .footer {
