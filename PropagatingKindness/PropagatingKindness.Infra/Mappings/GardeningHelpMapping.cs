@@ -13,6 +13,6 @@ public class GardeningHelpMapping : IEntityTypeConfiguration<GardeningHelp>
         builder.Property(b => b.Title).IsRequired().HasMaxLength(100).HasColumnName("Title");
         builder.Property(c => c.PostCode).IsRequired().HasMaxLength(7).HasColumnName("Post_Code");
         builder.Property(d => d.Description).IsRequired().HasMaxLength(1000).HasColumnName("Description");
-        builder.HasOne(e => e.User).WithMany();
+        builder.HasOne(e => e.User).WithMany().OnDelete(DeleteBehavior.NoAction);
     }
 }

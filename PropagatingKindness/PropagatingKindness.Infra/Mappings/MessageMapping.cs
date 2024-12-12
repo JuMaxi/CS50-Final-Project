@@ -13,8 +13,8 @@ namespace PropagatingKindness.Infra.Mappings
             builder.Property(b => b.Text).IsRequired().HasMaxLength(1500).HasColumnName("Text");
             builder.Property(c => c.Date).IsRequired().HasColumnName("Date");
             builder.Property(d => d.Status).IsRequired().HasColumnName("Status");
-            builder.HasOne(e => e.From).WithMany();
-            builder.HasOne(f => f.To).WithMany();
+            builder.HasOne(e => e.From).WithMany().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(f => f.To).WithMany().OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

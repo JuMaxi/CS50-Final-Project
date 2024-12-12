@@ -14,8 +14,8 @@ namespace PropagatingKindness.Infra.Mappings
             builder.Property(c => c.Photo).IsRequired().HasMaxLength(200).HasColumnName("Photo");
             builder.Property(d => d.ShortDescription).IsRequired().HasMaxLength(200).HasColumnName("Short_Description");
             builder.Property(e => e.Date).IsRequired().HasColumnName("Date");
-            builder.HasMany(f => f.Tags).WithOne();
-            builder.HasOne(g => g.Content).WithOne(h => h.BlogPost).HasForeignKey<BlogPostContent>("BlogPostId");
+            builder.HasMany(f => f.Tags).WithOne().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(g => g.Content).WithOne(h => h.BlogPost).HasForeignKey<BlogPostContent>("BlogPostId").OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
