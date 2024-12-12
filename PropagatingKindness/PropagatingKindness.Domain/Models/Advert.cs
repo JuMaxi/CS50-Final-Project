@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PropagatingKindness.Domain.Models
+﻿namespace PropagatingKindness.Domain.Models
 {
     public enum AdvertStatus
     {
@@ -17,7 +11,7 @@ namespace PropagatingKindness.Domain.Models
     public class Advert
     {
         public int Id {  get; set; }
-        public User UserId { get; set; }
+        public User User { get; set; }
         public string Name {  get; set; }
         public string Description { get; set; }
         public List<string> Photos { get; set; }
