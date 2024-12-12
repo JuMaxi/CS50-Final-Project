@@ -10,12 +10,12 @@ namespace PropagatingKindness.Infra.Mappings
         {
             builder.ToTable("Users");
             builder.HasKey(a => a.Id);
-            builder.Property(b => b.Photo).IsRequired().HasColumnName("Photo");
+            builder.Property(b => b.Photo).IsRequired().HasMaxLength(200).HasColumnName("Photo");
             builder.Property(c => c.Name).IsRequired().HasMaxLength(40).HasColumnName("Name");
             builder.Property(d => d.LastName).IsRequired().HasMaxLength(60).HasColumnName("Last_Name");
             builder.Property(e => e.Email).IsRequired().HasMaxLength(80).HasColumnName("Email");
-            builder.Property(f => f.Password).IsRequired().HasMaxLength(20).HasColumnName("Hash");
-            builder.Property(g => g.Birthday).IsRequired().HasMaxLength(8).HasColumnName("Birthday");
+            builder.Property(f => f.Password).IsRequired().HasMaxLength(64).HasColumnName("Hash");
+            builder.Property(g => g.Birthday).IsRequired().HasColumnName("Birthday");
             builder.Property(h => h.PostCode).IsRequired().HasMaxLength(7).HasColumnName("Post_Code");
 
         }
