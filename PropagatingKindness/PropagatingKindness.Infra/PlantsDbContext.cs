@@ -14,8 +14,12 @@ public class PlantsDbContext : DbContext
 
     public DbSet<Advert> Blogs { get; set; }
 
-    public DbSet<Gardening_Help> Gardening_Helps { get; set; }
+    public DbSet<GardeningHelp> Gardening_Helps { get; set; }
 
     public DbSet<Message> Messages { get; set; }
+
+    public DbSet<Tag> Tags { get; set; }
+    public DbSet<Photo> Photos { get; set; }
+    public DbSet<BlogPostContent> PostContents { get; set; }
 
 }

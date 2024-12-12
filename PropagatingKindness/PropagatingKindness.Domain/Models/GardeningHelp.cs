@@ -1,6 +1,6 @@
 ﻿namespace PropagatingKindness.Domain.Models
 {
-    public class Gardening_Help
+    public class GardeningHelp
     {
         public int Id {  get; set; }
         public User User { get; set; }

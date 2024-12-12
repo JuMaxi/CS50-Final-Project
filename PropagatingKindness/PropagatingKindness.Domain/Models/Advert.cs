@@ -14,7 +14,7 @@
         public User User { get; set; }
         public string Name {  get; set; }
         public string Description { get; set; }
-        public List<string> Photos { get; set; }
+        public List<Photo> Photos { get; set; }
         public AdvertStatus Status { get; set; }
         
     }
