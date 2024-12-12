@@ -11,7 +11,7 @@ namespace PropagatingKindness.Infra.Mappings
             builder.ToTable("Adverts");
             builder.HasKey(a => a.Id);
             builder.HasOne(b => b.User).WithMany();
-            builder.Property(b => b.User).HasColumnName("User_Id");
+            //builder.Property(b => b.User).HasColumnName("User_Id");
             builder.Property(c => c.Name).IsRequired().HasMaxLength(30).HasColumnName("Name");
             builder.Property(d => d.Description).IsRequired().HasMaxLength(1000).HasColumnName("Description");
             builder.Property(e => e.Status).IsRequired().HasColumnName("Status");

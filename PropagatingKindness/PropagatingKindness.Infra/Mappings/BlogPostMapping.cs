@@ -4,7 +4,7 @@ using PropagatingKindness.Domain.Models;
 
 namespace PropagatingKindness.Infra.Mappings
 {
-    public class BlogMapping : IEntityTypeConfiguration<BlogPost>
+    public class BlogPostMapping : IEntityTypeConfiguration<BlogPost>
     {
         public void Configure(EntityTypeBuilder<BlogPost> builder)
         {
@@ -15,7 +15,7 @@ namespace PropagatingKindness.Infra.Mappings
             builder.Property(d => d.ShortDescription).IsRequired().HasMaxLength(200).HasColumnName("Short_Description");
             builder.Property(e => e.Date).IsRequired().HasColumnName("Date");
             builder.HasMany(f => f.Tags).WithOne();
-            builder.HasOne(g => g.Content).WithOne();
+            builder.HasOne(g => g.Content).WithOne(h => h.BlogPost).HasForeignKey<BlogPostContent>("BlogPostId");
         }
     }
 }
