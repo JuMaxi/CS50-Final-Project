@@ -1,4 +1,7 @@
+using System;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
+using PropagatingKindness.Infra;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +24,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         opts.Cookie.IsEssential = true;
         opts.Cookie.SameSite = SameSiteMode.Strict;
     });
+builder.Services.AddDbContext<PlantsDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("PlantsDB")));
 
 var app = builder.Build();
 

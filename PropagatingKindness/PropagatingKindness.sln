@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35521.163 d17.12
+VisualStudioVersion = 17.12.35521.163
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropagatingKindness", "PropagatingKindness\PropagatingKindness.csproj", "{A3509D29-47A0-4ADE-A836-095F6C40F5BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropagatingKindness.Domain", "PropagatingKindness.Domain\PropagatingKindness.Domain.csproj", "{3E1BB387-530C-41E5-B039-CBEEF9EFA3F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropagatingKindness.Infra", "PropagatingKindness.Infra\PropagatingKindness.Infra.csproj", "{D43F5492-FDA6-48F4-B60A-C5AAD0DAE790}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{A3509D29-47A0-4ADE-A836-095F6C40F5BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3509D29-47A0-4ADE-A836-095F6C40F5BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3509D29-47A0-4ADE-A836-095F6C40F5BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E1BB387-530C-41E5-B039-CBEEF9EFA3F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E1BB387-530C-41E5-B039-CBEEF9EFA3F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E1BB387-530C-41E5-B039-CBEEF9EFA3F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E1BB387-530C-41E5-B039-CBEEF9EFA3F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D43F5492-FDA6-48F4-B60A-C5AAD0DAE790}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D43F5492-FDA6-48F4-B60A-C5AAD0DAE790}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D43F5492-FDA6-48F4-B60A-C5AAD0DAE790}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D43F5492-FDA6-48F4-B60A-C5AAD0DAE790}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -23,10 +23,12 @@
     <header class="header p-3">
         <div class="nav-container">
             <div style="display: flex; gap: 15px;">
-                <h2>Name website</h2>
+                <h2>
+                    <a asp-area="" asp-controller="Home" asp-action="Index">Propagating Kindness</a>
+                </h2>
             </div>
 
-            <!-- Right Section: Search & Login -->
+            <!-- Right Section: Login -->
             <div style="display: flex; gap: 15px;">
                 @if (User.Identity?.IsAuthenticated ?? false)
                 {
@@ -49,7 +51,9 @@
     <!--My logo image-->
     <div class="nav-container">
         <div class="text-center mx-auto" style="padding-top: 10px; display: flex;">
-            <img src="/images/logo-resized.png" class="img-fluid" alt="Responsive image" />
+            <a asp-area="" asp-controller="Home" asp-action="Index">
+                <img src="/images/logo-resized.png" class="img-fluid" alt="Responsive image" />
+            </a>
         </div>
     </div>
 

@@ -45,9 +45,23 @@ namespace PropagatingKindness.Controllers
             }
         }
 
+        [HttpGet]
         public IActionResult CreateAccount()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateAccount(CreateAccountViewModel account)
+        {
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View(account);
+            }
         }
 
         [Authorize]
