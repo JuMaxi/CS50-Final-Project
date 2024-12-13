@@ -14,7 +14,7 @@ namespace PropagatingKindness.Infra.Mappings
             builder.Property(c => c.Name).IsRequired().HasMaxLength(40).HasColumnName("Name");
             builder.Property(d => d.LastName).IsRequired().HasMaxLength(60).HasColumnName("Last_Name");
             builder.Property(e => e.Email).IsRequired().HasMaxLength(80).HasColumnName("Email");
-            builder.Property(f => f.Password).IsRequired().HasMaxLength(64).HasColumnName("Hash");
+            builder.Property(f => f.Password).IsRequired().HasMaxLength(100).HasColumnName("Hash");
             builder.Property(g => g.Birthday).IsRequired().HasColumnName("Birthday");
             builder.Property(h => h.PostCode).IsRequired().HasMaxLength(7).HasColumnName("Post_Code");
 
