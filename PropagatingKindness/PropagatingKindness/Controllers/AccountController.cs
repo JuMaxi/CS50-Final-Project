@@ -56,6 +56,9 @@ namespace PropagatingKindness.Controllers
         {
             if (ModelState.IsValid)
             {
+                var dto = account.ConvertToDTO();
+                // create a UserDTO from the account
+                // _userService.CreateUser(UserDTO)
                 return RedirectToAction("Index", "Home");
             }
             else

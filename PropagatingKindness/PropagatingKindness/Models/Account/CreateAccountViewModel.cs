@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using PropagatingKindness.Domain.DTO;
 
 namespace PropagatingKindness.Models.Account
 {
@@ -25,20 +26,21 @@ namespace PropagatingKindness.Models.Account
         [Required(ErrorMessage="Birthday Date is required")]
         public DateOnly Birthday { get; set; }
 
-        [Required(ErrorMessage = "Address is required.")]
-        [StringLength(25, ErrorMessage ="Address can't exceed 25 characters.")]
-        public string Address { get; set; }
-
-        [Required(ErrorMessage = "City is required.")]
-        [StringLength(20, ErrorMessage = "City/Town can't exceed 20 characters.")]
-        public string City { get; set; }
-
-        [Required(ErrorMessage = "County is required.")]
-        [StringLength(20, ErrorMessage = "County can't exceed 20 characters.")]
-        public string County { get; set; }
-
         [Required(ErrorMessage = "Post Code is required.")]
         [StringLength(7, ErrorMessage = "Post Code to the UK exceed 7 characters.")]
         public string PostCode { get; set; }
+
+        public UserDTO ConvertToDTO()
+        {
+            return new UserDTO()
+            {
+                FirstName = FirstName,
+                LastName = LastName,
+                Email = Email,
+                Password = Password,
+                Birthday = Birthday,
+                PostCode = PostCode,
+            };
+        }
     }
 }

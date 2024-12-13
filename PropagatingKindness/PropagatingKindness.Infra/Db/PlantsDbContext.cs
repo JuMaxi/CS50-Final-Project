@@ -2,13 +2,13 @@
 using PropagatingKindness.Domain.Models;
 
 
-namespace PropagatingKindness.Infra;
+namespace PropagatingKindness.Infra.Db;
 
 public class PlantsDbContext : DbContext
 {
     public PlantsDbContext(DbContextOptions<PlantsDbContext> options)
         : base(options) { }
-    
+
     public DbSet<User> Users { get; set; }
     public DbSet<Advert> Adverts { get; set; }
 

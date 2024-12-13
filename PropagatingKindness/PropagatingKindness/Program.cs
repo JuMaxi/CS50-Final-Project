@@ -1,13 +1,20 @@
 using System;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-using PropagatingKindness.Infra;
+using PropagatingKindness.Domain.Interfaces;
+using PropagatingKindness.Domain.Services;
+using PropagatingKindness.Infra.Db;
+using PropagatingKindness.Infra.DbAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+
 builder.Services.AddSession(sessionOptions => 
 {
     sessionOptions.IdleTimeout = TimeSpan.FromMinutes(30);
