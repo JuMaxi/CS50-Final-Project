@@ -37,12 +37,16 @@ namespace PropagatingKindness.Controllers
             if (authenticated.Success)
             {
                 // Create the C# Claims and SignIn the User
-                List<Claim> claims = [new(ClaimTypes.Name, authenticated.User.Email), new(ClaimTypes.NameIdentifier, authenticated.User.Id.ToString())];
+                List<Claim> claims = 
+                [
+                    new(ClaimTypes.Email, authenticated.User.Email), 
+                    new(ClaimTypes.Name, authenticated.User.FirstName), 
+                    new(ClaimTypes.NameIdentifier, authenticated.User.Id.ToString())
+                ];
+
                 var claimsId = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsId));
-
-                HttpContext.Session.SetString(Constants.LoggedUserNameSessionKey, InputEmail); // this will be better with the actual name
 
                 return RedirectToAction("Index", "Home");
             }
