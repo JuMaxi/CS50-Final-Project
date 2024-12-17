@@ -1,6 +1,11 @@
 ﻿@model PropagatingKindness.Models.Account.CreateAccountViewModel
 
 <main class="container main-content mx-auto">
+    @if (!string.IsNullOrEmpty(Model?.ErrorMessage))
+    {
+        <h2 style="color:crimson"> ⚠️ @Model.ErrorMessage </h2>
+    }
+
     <form class="row g-3" asp-action="CreateAccount" asp-controller="Account" method="post" enctype="multipart/form-data">
         <div class="input-group mb-3">
             <input asp-for="Photo" type="file" name="Photo" class="form-control" id="Photo">

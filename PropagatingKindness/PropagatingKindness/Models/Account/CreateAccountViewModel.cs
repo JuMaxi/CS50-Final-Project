@@ -5,6 +5,8 @@ namespace PropagatingKindness.Models.Account
 {
     public class CreateAccountViewModel
     {
+        public string ErrorMessage { get; set; } = string.Empty;
+
         public IFormFile Photo {  get; set; }
 
         [Required(ErrorMessage = "First Name is required.")]

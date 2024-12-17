@@ -20,9 +20,10 @@ namespace PropagatingKindness.Infra.DbAccess
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<User> GetByEmail(string email)
+        public async Task<User?> GetByEmail(string email)
         {
-            return await _dbContext.Users.Where(e => e.Email == email).FirstOrDefaultAsync();
+            var result = await _dbContext.Users.Where(e => e.Email == email.ToLower()).FirstOrDefaultAsync();
+            return result;
         }
     }
 }

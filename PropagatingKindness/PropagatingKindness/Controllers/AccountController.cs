@@ -1,9 +1,9 @@
-﻿using System.Diagnostics;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PropagatingKindness.Domain.Interfaces;
 using PropagatingKindness.Models;
 using PropagatingKindness.Models.Account;
 
@@ -11,26 +11,33 @@ namespace PropagatingKindness.Controllers
 {
     public class AccountController : Controller
     {
-        private static string user = "test@test.com";
-        private static string pass = "secret";
+        private readonly IUserService _userService;
+
+        public AccountController(IUserService userService)
+        {
+            _userService = userService;
+        }
 
         [HttpGet]
         public IActionResult Login()
         {
-            // E se o usuario ja estiver logado?
-            //   Redirecionar para Home
-            // E se o usuario errar a senha?
-            //   Mostrar a view de novo, mas dessa vez com uma mensagem.
+            if (HttpContext.User?.Identity?.IsAuthenticated ?? false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View(new LoginViewModel());
         }
 
         [HttpPost]
         public async Task<IActionResult> Login(string InputEmail, string InputPassword)
         {
-            if (InputEmail == user && InputPassword == pass)
+            var authenticated = await _userService.Authenticate(InputEmail, InputPassword);
+
+            if (authenticated.Success)
             {
                 // Create the C# Claims and SignIn the User
-                List<Claim> claims = [new(ClaimTypes.Name, InputEmail)];
+                List<Claim> claims = [new(ClaimTypes.Name, authenticated.User.Email), new(ClaimTypes.NameIdentifier, authenticated.User.Id.ToString())];
                 var claimsId = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsId));
@@ -41,30 +48,37 @@ namespace PropagatingKindness.Controllers
             }
             else
             {
-                return View(new LoginViewModel() { ErrorMessage = "Invalid email or password provided. Please try again." });
+                return View(new LoginViewModel() { ErrorMessage = authenticated.ErrorMessage });
             }
         }
 
         [HttpGet]
         public IActionResult CreateAccount()
         {
+            if (HttpContext.User?.Identity?.IsAuthenticated ?? false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
         [HttpPost]
-        public IActionResult CreateAccount(CreateAccountViewModel account)
+        public async Task<IActionResult> CreateAccount(CreateAccountViewModel account)
         {
             if (ModelState.IsValid)
             {
-                var dto = account.ConvertToDTO();
-                // create a UserDTO from the account
-                // _userService.CreateUser(UserDTO)
-                return RedirectToAction("Index", "Home");
+                var result = await _userService.CreateAccount(account.ConvertToDTO());
+
+                if (result.Success)
+                    return RedirectToAction("Index", "Home");
+                else
+                {
+                    account.ErrorMessage = result.ErrorMessage;
+                    return View(account);
+                }
             }
-            else
-            {
-                return View(account);
-            }
+
+            return View(account);
         }
 
         [Authorize]
