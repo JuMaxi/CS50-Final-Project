@@ -1,4 +1,7 @@
-﻿@model PropagatingKindness.Models.Account.CreateAccountViewModel
+﻿@using Microsoft.Extensions.Options
+@using PropagatingKindness.Configuration
+@model PropagatingKindness.Models.Account.CreateAccountViewModel
+@inject IOptions<ReCaptchaConfiguration> ReCaptcha
 
 <main class="container main-content mx-auto">
     @if (!string.IsNullOrEmpty(Model?.ErrorMessage))
@@ -44,11 +47,13 @@
         </div>
         <div class="col-12">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
-                <label class="form-check-label" for="invalidCheck2">
-                    Agree to terms and conditions
-                </label>
+                <input asp-for="AgreeToTerms" type="checkbox" name="AgreeToTerms" id="AgreeToTerms" required>
+                <label asp-for="AgreeToTerms" for="AgreeToTerms" class="form-label">Agree to terms and conditions</label>
+                <span asp-validation-for="AgreeToTerms" class="text-danger"></span>
             </div>
+        </div>
+        <div class="col-12">
+            <div class="g-recaptcha" data-sitekey="@ReCaptcha.Value.SiteKey"></div>
         </div>
         <div class="col-12">
             <button class="btn btn-primary" type="submit">Submit form</button>

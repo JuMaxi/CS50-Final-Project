@@ -1,10 +1,11 @@
-using System;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using PropagatingKindness.Configuration;
 using PropagatingKindness.Domain.Interfaces;
 using PropagatingKindness.Domain.Services;
 using PropagatingKindness.Infra.Db;
 using PropagatingKindness.Infra.DbAccess;
+using PropagatingKindness.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,11 +16,6 @@ builder.Services.AddDistributedMemoryCache();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 
-builder.Services.AddSession(sessionOptions => 
-{
-    sessionOptions.IdleTimeout = TimeSpan.FromMinutes(30);
-    sessionOptions.Cookie.IsEssential = true;
-});
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(opts => 
     {
@@ -33,6 +29,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 builder.Services.AddDbContext<PlantsDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("PlantsDB")));
+builder.Services.AddHttpClient<IReCaptchaService, ReCaptchaService>();
+
+builder.Services.Configure<ReCaptchaConfiguration>(builder.Configuration.GetSection(ReCaptchaConfiguration.ConfigSection));
 
 var app = builder.Build();
 
@@ -46,7 +45,6 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
-app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

@@ -32,6 +32,9 @@ namespace PropagatingKindness.Models.Account
         [StringLength(7, ErrorMessage = "Post Code to the UK exceed 7 characters.")]
         public string PostCode { get; set; }
 
+        [Required(ErrorMessage = "Please accept the user agreements.")]
+        public bool AgreeToTerms { get; set; }
+
         public UserDTO ConvertToDTO()
         {
             return new UserDTO()

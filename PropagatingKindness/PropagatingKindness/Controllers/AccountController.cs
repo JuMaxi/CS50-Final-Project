@@ -3,19 +3,22 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PropagatingKindness.Domain.DTO;
 using PropagatingKindness.Domain.Interfaces;
-using PropagatingKindness.Models;
 using PropagatingKindness.Models.Account;
+using PropagatingKindness.Services;
 
 namespace PropagatingKindness.Controllers
 {
     public class AccountController : Controller
     {
         private readonly IUserService _userService;
+        private readonly IReCaptchaService _reCaptchaService;
 
-        public AccountController(IUserService userService)
+        public AccountController(IUserService userService, IReCaptchaService reCaptchaService)
         {
             _userService = userService;
+            _reCaptchaService = reCaptchaService;
         }
 
         [HttpGet]
@@ -67,14 +70,27 @@ namespace PropagatingKindness.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAccount(CreateAccountViewModel account)
+        public async Task<IActionResult> CreateAccount(CreateAccountViewModel account, IFormCollection form)
         {
+            if (string.IsNullOrWhiteSpace(form["g-recaptcha-response"]))
+            {
+                account.ErrorMessage = "Please solve the captcha challenge";
+                return View(account);
+            }
+
             if (ModelState.IsValid)
             {
+                var recaptcha = await _reCaptchaService.ValidateRecaptcha(form["g-recaptcha-response"]);
+                if (!recaptcha.Success)
+                {
+                    account.ErrorMessage = recaptcha.ErrorMessage;
+                    return View(account);
+                }
+
                 var result = await _userService.CreateAccount(account.ConvertToDTO());
 
                 if (result.Success)
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Login", "Account");
                 else
                 {
                     account.ErrorMessage = result.ErrorMessage;
@@ -94,7 +110,6 @@ namespace PropagatingKindness.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
 
