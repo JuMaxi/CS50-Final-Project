@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using PropagatingKindness.Domain.DTO;
 using PropagatingKindness.Domain.Models;
 
 namespace PropagatingKindness.Models.Advert
@@ -22,5 +23,22 @@ namespace PropagatingKindness.Models.Advert
         public IFormFile Photo4 { get; set; }
 
         public int Status { get; set; }
+
+        public AdvertDTO ConvertToDTO()
+        {
+            List<string> p = new();
+            p.Add(Photo1.ToString());
+            p.Add(Photo2?.ToString());
+            p.Add(Photo3?.ToString());
+            p.Add(Photo4?.ToString());
+
+            return new AdvertDTO
+            {
+                Name = Name,
+                Description = Description,
+                Status = Status,
+                Photos = p
+            };
+        }
     }
 }

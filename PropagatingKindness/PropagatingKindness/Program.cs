@@ -5,6 +5,7 @@ using PropagatingKindness.Domain.Interfaces;
 using PropagatingKindness.Domain.Services;
 using PropagatingKindness.Infra.Db;
 using PropagatingKindness.Infra.DbAccess;
+using PropagatingKindness.Infra.Repository;
 using PropagatingKindness.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,8 @@ builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IAdvertService, AdvertService>();
+builder.Services.AddTransient<IAdvertRepository, AdvertRepository>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(opts => 

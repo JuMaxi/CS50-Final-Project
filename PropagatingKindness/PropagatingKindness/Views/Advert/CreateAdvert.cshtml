@@ -1,28 +1,60 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@using Microsoft.Extensions.Options
+@using PropagatingKindness.Configuration
+@model PropagatingKindness.Models.Advert.CreateAdvertViewModel
+@inject IOptions<ReCaptchaConfiguration> ReCaptcha
+
 <div class="container mt-5">
+    @if (!string.IsNullOrEmpty(Model?.ErrorMessage))
+    {
+        <h2 style="color:crimson"> ⚠️ @Model.ErrorMessage </h2>
+    }
     <h1 class="text-center mb-4">Create Your Ad</h1>
-    <form>
+    <form class="row g-3" asp-action="CreateAdvert" asp-controller="Advert" method="post" enctype="multipart/form-data">
         <!-- Name Field -->
         <div class="mb-3">
-            <label for="adName" class="form-label">Name</label>
-            <input type="text" class="form-control" id="adName" placeholder="Enter the name of your ad" required>
+            <label asp-for="Name" for="Name" class="form-label">Name</label>
+            <input asp-for="Name" type="text" name="Name" class="form-control" id="Name" placeholder="Enter the name of your ad" required>
+            <span asp-validation-for="Name" class="text-danger"></span>
         </div>
 
         <!-- Description Field -->
         <div class="mb-3">
-            <label for="adDescription" class="form-label">Description</label>
-            <textarea class="form-control" id="adDescription" rows="4" placeholder="Enter a description for your ad" required></textarea>
+            <label asp-for="Description" for="Description" class="form-label">Description</label>
+            <textarea asp-for="Description" type="text" name="Description" class="form-control" id="Description" rows="4" placeholder="Enter a description for your ad" required></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
         </div>
 
         <!-- Photos Field -->
         <div class="mb-3">
-            <label for="adPhotos" class="form-label">Photos</label>
-            <input type="file" class="form-control" id="adPhotos" accept="image/*" multiple>
+            <label asp-for="Photo1" for="Photo1" class="form-label">Photo</label>
+            <input asp-for="Photo1" type="file" name="Photo1" class="form-control" id="Photo1" accept="image/*">
+            <span asp-validation-for="Photo1" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Photo2" for="Photo2" class="form-label">Photo</label>
+            <input asp-for="Photo2" type="file" name="Photo2" class="form-control" id="Photo2" accept="image/*">
+            <span asp-validation-for="Photo2" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Photo3" for="Photo3" class="form-label">Photo</label>
+            <input asp-for="Photo3" type="file" name="Photo3" class="form-control" id="Photo3" accept="image/*">
+            <span asp-validation-for="Photo3" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Photo4" for="Photo4" class="form-label">Photo</label>
+            <input asp-for="Photo4" type="file" name="Photo4" class="form-control" id="Photo4" accept="image/*">
+            <span asp-validation-for="Photo4" class="text-danger"></span>
+        </div>
+
+        <!--reCaptcha-->
+        <div class="col-12">
+            <div class="g-recaptcha" data-sitekey="@ReCaptcha.Value.SiteKey"></div>
         </div>
 
         <!-- Submit Button -->
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
 </div>

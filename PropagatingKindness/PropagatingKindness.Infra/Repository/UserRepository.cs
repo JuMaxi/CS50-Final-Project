@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PropagatingKindness.Domain.DTO;
 using PropagatingKindness.Domain.Interfaces;
 using PropagatingKindness.Domain.Models;
 using PropagatingKindness.Infra.Db;
@@ -24,6 +25,11 @@ namespace PropagatingKindness.Infra.DbAccess
         {
             var result = await _dbContext.Users.Where(e => e.Email == email.ToLower()).FirstOrDefaultAsync();
             return result;
+        }
+
+        public async Task<User> GetById(int id)
+        {
+            return await _dbContext.Users.Where(u => u.Id == id).FirstOrDefaultAsync();
         }
     }
 }

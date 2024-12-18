@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PropagatingKindness.Domain.DTO;
 using PropagatingKindness.Domain.Interfaces;
 using PropagatingKindness.Models.Account;
 using PropagatingKindness.Services;
