@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Create Your Ad</h1>
+    <form>
+        <!-- Name Field -->
+        <div class="mb-3">
+            <label for="adName" class="form-label">Name</label>
+            <input type="text" class="form-control" id="adName" placeholder="Enter the name of your ad" required>
+        </div>
+
+        <!-- Description Field -->
+        <div class="mb-3">
+            <label for="adDescription" class="form-label">Description</label>
+            <textarea class="form-control" id="adDescription" rows="4" placeholder="Enter a description for your ad" required></textarea>
+        </div>
+
+        <!-- Photos Field -->
+        <div class="mb-3">
+            <label for="adPhotos" class="form-label">Photos</label>
+            <input type="file" class="form-control" id="adPhotos" accept="image/*" multiple>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
