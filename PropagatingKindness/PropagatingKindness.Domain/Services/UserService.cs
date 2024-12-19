@@ -28,12 +28,11 @@ namespace PropagatingKindness.Domain.Services
             return new LoginResult(UserDTO.FromUser(user));
         }
 
-        public async Task<Result> CreateAccount(UserDTO userDTO)
+        private async Task<Result> ValidateFields(UserDTO userDTO)
         {
-            // Ja existe um usuario com esse email?
             if (await GetByEmail(userDTO.Email) is not null)
                 return new Result(false, "This email is already registered.");
-
+            
             // Usuario colocou uma data de nascimento no futuro?
             if (userDTO.Birthday > DateOnly.FromDateTime(DateTime.Today))
                 return new Result(false, "Birthday cannot be in the future.");
@@ -45,6 +44,17 @@ namespace PropagatingKindness.Domain.Services
             // Usuario tem que ser maior de 18
             if ((DateTime.Today.Year - userDTO.Birthday.Year) < 18)
                 return new Result(false, "For safety reasons, users must be 18 years old or more.");
+
+            return new Result(true, string.Empty);
+        }
+
+        public async Task<Result> CreateAccount(UserDTO userDTO)
+        {
+            var result = await ValidateFields(userDTO);
+            if (!result.Success)
+            {
+                return result;
+            }
 
             // Calcular um Hash
             string hash = HashingHelper.CalculateHashWithSalt(userDTO.Password);
@@ -75,6 +85,27 @@ namespace PropagatingKindness.Domain.Services
         public async Task<User> GetById(int id)
         {
             return await _userRepository.GetById(id);
+        }
+
+        public async Task<Result> Update(UserDTO userDTO)
+        {
+            var result = await ValidateFields(userDTO);
+            if (!result.Success)
+            {
+                return result;
+            }
+
+            User to_Update = await _userRepository.GetById(userDTO.Id);
+
+            to_Update.Name = userDTO.FirstName;
+            to_Update.LastName = userDTO.LastName;
+            to_Update.Photo = userDTO.Photo;
+            to_Update.Birthday = userDTO.Birthday;
+            to_Update.Email = userDTO.Email;
+
+            await _userRepository.Update(to_Update);
+
+            return result;
         }
     }
 }

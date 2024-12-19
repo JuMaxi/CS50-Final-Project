@@ -1,5 +1,54 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using Microsoft.Extensions.Options
+@using PropagatingKindness.Configuration
+@model PropagatingKindness.Models.Account.EditAccountViewModel
+@inject IOptions<ReCaptchaConfiguration> ReCaptcha
+
+<main class="container main-content mx-auto">
+    @if (!string.IsNullOrEmpty(Model?.ErrorMessage))
+    {
+        <h2 style="color:crimson"> ⚠️ @Model.ErrorMessage </h2>
+    }
+
+    <form class="row g-3" asp-action="Edit" asp-controller="Account" method="post" enctype="multipart/form-data">
+        <div class="input-group mb-3">
+            <input asp-for="Photo" type="file" name="Photo" class="form-control" id="Photo">
+            <label asp-for="Photo" class="input-group-text" for="Photo">Upload</label>
+            <span asp-validation-for="Photo" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="FirstName" for="FirstName" class="form-label">First name</label>
+            <input asp-for="FirstName" type="text" name="FirstName" class="form-control" id="FirstName" required>
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="LastName" for="LastName" class="form-label">Last name</label>
+            <input asp-for="LastName" type="text" name="LastName" class="form-control" id="LastName" required>
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Email" for="Email" class="form-label">Email</label>
+            <input asp-for="Email" type="text" name="Email" class="form-control" id="Email" required>
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Birthday" for="Birthday" class="form-label">Birthday</label>
+            <input asp-for="Birthday" type="date" name="Birthday" class="form-control" id="Birthday" required>
+            <span asp-validation-for="Birthday" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="PostCode" for="PostCode" class="form-label">Post Code</label>
+            <input asp-for="PostCode" type="text" name="PostCode" class="form-control" id="PostCode" required>
+            <span asp-validation-for="PostCode" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <div class="g-recaptcha" data-sitekey="@ReCaptcha.Value.SiteKey"></div>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit">Save Changes</button>
+        </div>
+    </form>
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+</main>

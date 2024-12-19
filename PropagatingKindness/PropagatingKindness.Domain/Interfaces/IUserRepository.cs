@@ -7,5 +7,6 @@ namespace PropagatingKindness.Domain.Interfaces
         public Task Insert(User user);
         public Task<User?> GetByEmail(string email);
         public Task<User> GetById(int id);
+        public Task Update(User user);
     }
 }

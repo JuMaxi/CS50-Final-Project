@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PropagatingKindness.Domain.Interfaces;
+using PropagatingKindness.Domain.Models;
 using PropagatingKindness.Models.Account;
 using PropagatingKindness.Services;
 
@@ -101,8 +102,48 @@ namespace PropagatingKindness.Controllers
         }
 
         [Authorize]
-        public IActionResult Edit()
+        [HttpGet]
+        public async Task<IActionResult> Edit()
         {
+            var userId = Convert.ToInt32(HttpContext.User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value);
+            
+            var user = await _userService.GetById(userId);
+
+            var account = new EditAccountViewModel();
+            
+            return View(account.FromUser(user));
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditAccountViewModel accountView, IFormCollection form)
+        {
+            if (string.IsNullOrWhiteSpace(form["g-recaptcha-response"]))
+            {
+                accountView.ErrorMessage = "Please solve the captcha challenge";
+                return View(accountView);
+            }
+
+            if (ModelState.IsValid)
+            {
+                var recaptcha = await _reCaptchaService.ValidateRecaptcha(form["g-recaptcha-response"]);
+                if (!recaptcha.Success)
+                {
+                    accountView.ErrorMessage = recaptcha.ErrorMessage;
+                    return View(accountView);
+                }
+
+                var result = await _userService.Update(accountView.ConvertToDTO());
+
+                if (result.Success)
+                    return RedirectToAction("Login", "Account");
+                else
+                {
+                    accountView.ErrorMessage = result.ErrorMessage;
+                    return View(accountView);
+                }
+            }
+
             return View();
         }
 

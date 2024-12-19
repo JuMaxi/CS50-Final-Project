@@ -5,6 +5,7 @@ namespace PropagatingKindness.Domain.DTO;
 public class UserDTO
 {
     public int Id { get; set; }
+    public string Photo {  get; set; }
     public string FirstName { get; set; }
 
     public string LastName { get; set; }
@@ -21,6 +22,7 @@ public class UserDTO
     {
         return new UserDTO()
         {
+            Photo = user.Photo,
             Birthday = user.Birthday,
             Email = user.Email,
             FirstName = user.Name,
