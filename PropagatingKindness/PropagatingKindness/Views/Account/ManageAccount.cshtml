@@ -3,50 +3,62 @@
 @model PropagatingKindness.Models.Account.ManageAccountViewModel
 
 <main class="container main-content mx-auto">
-    <form class="row g-3" asp-action="ManageAccount" asp-controller="Account" method="get" enctype="multipart/form-data">
-        <div class="input-group mb-3">
-            <img alt="" src="@Model.Photo" />
+    <div class="d-flex">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-10">
+                    <form asp-action="ManageAccount" asp-controller="Account" method="get" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label asp-for="FirstName" for="FirstName" class="form-label">First name</label>
+                            <input asp-for="FirstName" type="text" name="FirstName" class="form-control" id="FirstName" disabled>
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="LastName" for="LastName" class="form-label">Last name</label>
+                            <input asp-for="LastName" type="text" name="LastName" class="form-control" id="LastName" disabled>
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Email" for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" type="text" name="Email" class="form-control" id="Email" disabled>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Birthday" for="Birthday" class="form-label">Birthday</label>
+                            <input asp-for="Birthday" type="date" name="Birthday" class="form-control" id="Birthday" disabled>
+                            <span asp-validation-for="Birthday" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="PostCode" for="PostCode" class="form-label">Post Code</label>
+                            <input asp-for="PostCode" type="text" name="PostCode" class="form-control" id="PostCode" disabled>
+                            <span asp-validation-for="PostCode" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <button class="btn btn-primary" type="submit">
+                                <a asp-area="" asp-controller="Account" asp-action="EditProfile">Edit Profile</a>
+                            </button>
+                        </div>
+                        <div class="mb-3">
+                            <button class="btn btn-primary" type="submit">Change Password</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="col-md-4">
-            <label asp-for="FirstName" for="FirstName" class="form-label">First name</label>
-            <input asp-for="FirstName" type="text" name="FirstName" class="form-control" id="FirstName" disabled>
-            <span asp-validation-for="FirstName" class="text-danger"></span>
+        <div class="col-md-4 flex align-items-center justify-content-center">
+            <div class="row mb-3 mt-5">
+                <img class="img-fluid" alt="" src="@Model.Photo" />
+            </div>
+            <div class="row">
+                <button class="btn btn-primary" type="button">Change Photo</button>
+            </div>
         </div>
-        <div class="col-md-4">
-            <label asp-for="LastName" for="LastName" class="form-label">Last name</label>
-            <input asp-for="LastName" type="text" name="LastName" class="form-control" id="LastName" disabled>
-            <span asp-validation-for="LastName" class="text-danger"></span>
-        </div>
-        <div class="col-md-6">
-            <label asp-for="Email" for="Email" class="form-label">Email</label>
-            <input asp-for="Email" type="text" name="Email" class="form-control" id="Email" disabled>
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-        <div class="col-md-6">
-            <label asp-for="Birthday" for="Birthday" class="form-label">Birthday</label>
-            <input asp-for="Birthday" type="date" name="Birthday" class="form-control" id="Birthday" disabled>
-            <span asp-validation-for="Birthday" class="text-danger"></span>
-        </div>
-        <div class="col-md-3">
-            <label asp-for="PostCode" for="PostCode" class="form-label">Post Code</label>
-            <input asp-for="PostCode" type="text" name="PostCode" class="form-control" id="PostCode" disabled>
-            <span asp-validation-for="PostCode" class="text-danger"></span>
-        </div>
+    </div>
 
-       
-        <div class="col-12">
-           
-                <a asp-area="" asp-controller="Account" asp-action="EditProfile">Edit Profile</a>
-            
-        </div>
-        <div class="col-12">
-            <button class="btn btn-primary" type="submit">Change Photo</button>
-        </div>
-        <div class="col-12">
-            <button class="btn btn-primary" type="submit">Change Password</button>
-        </div>
-    </form>
     @section Scripts {
         <partial name="_ValidationScriptsPartial" />
     }
+    </div>
 </main>
+
+
