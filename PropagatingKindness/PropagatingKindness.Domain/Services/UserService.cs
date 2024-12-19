@@ -68,7 +68,7 @@ namespace PropagatingKindness.Domain.Services
                 Password = hash,
                 Birthday = userDTO.Birthday,
                 PostCode = userDTO.PostCode,
-                Photo = "https://cdn-icons-png.flaticon.com/512/3237/3237472.png"
+                Photo = userDTO.Photo,
             };
 
             // Save the User

@@ -7,7 +7,7 @@ namespace PropagatingKindness.Models.Account
     {
         public string ErrorMessage { get; set; } = string.Empty;
 
-        public IFormFile Photo { get; set; }
+        public string Photo { get; set; }
 
         public string FirstName { get; set; }
 
@@ -23,7 +23,7 @@ namespace PropagatingKindness.Models.Account
         {
             return new ManageAccountViewModel()
             {
-                //Photo = user.Photo,
+                Photo = user.Photo,
                 FirstName = user.Name,
                 LastName = user.LastName,
                 Email = user.Email,

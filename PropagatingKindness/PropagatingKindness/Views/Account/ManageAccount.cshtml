@@ -5,9 +5,7 @@
 <main class="container main-content mx-auto">
     <form class="row g-3" asp-action="ManageAccount" asp-controller="Account" method="get" enctype="multipart/form-data">
         <div class="input-group mb-3">
-            <input asp-for="Photo" type="file" name="Photo" class="form-control" id="Photo" disabled>
-            <label asp-for="Photo" class="input-group-text" for="Photo">Upload</label>
-            <span asp-validation-for="Photo" class="text-danger"></span>
+            <img alt="" src="@Model.Photo" />
         </div>
         <div class="col-md-4">
             <label asp-for="FirstName" for="FirstName" class="form-label">First name</label>

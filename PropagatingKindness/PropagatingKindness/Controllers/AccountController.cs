@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PropagatingKindness.Domain.Interfaces;
-using PropagatingKindness.Domain.Models;
 using PropagatingKindness.Models.Account;
 using PropagatingKindness.Services;
 
@@ -14,15 +13,20 @@ namespace PropagatingKindness.Controllers
     {
         private readonly IUserService _userService;
         private readonly IReCaptchaService _reCaptchaService;
+        private readonly IPhotosManagerService _photosService;
 
-        public AccountController(IUserService userService, IReCaptchaService reCaptchaService)
+        public AccountController(
+            IUserService userService, 
+            IReCaptchaService reCaptchaService,
+            IPhotosManagerService photosService)
         {
             _userService = userService;
             _reCaptchaService = reCaptchaService;
+            _photosService = photosService;
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public async Task<IActionResult> Login()
         {
             if (HttpContext.User?.Identity?.IsAuthenticated ?? false)
             {
@@ -87,7 +91,11 @@ namespace PropagatingKindness.Controllers
                     return View(account);
                 }
 
-                var result = await _userService.CreateAccount(account.ConvertToDTO());
+                var imagePath = await _photosService.ResizeAndUpload(account.Photo, maxWidth: 500, maxHeight: 500, blobContainer: "users");
+                var dto = account.ConvertToDTO();
+                dto.Photo = imagePath;
+
+                var result = await _userService.CreateAccount(dto);
 
                 if (result.Success)
                     return RedirectToAction("Login", "Account");

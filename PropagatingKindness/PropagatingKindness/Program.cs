@@ -18,6 +18,7 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IAdvertService, AdvertService>();
 builder.Services.AddTransient<IAdvertRepository, AdvertRepository>();
+builder.Services.AddTransient<IPhotosManagerService, PhotosManagerService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(opts => 
@@ -35,6 +36,7 @@ builder.Services.AddDbContext<PlantsDbContext>(options =>
 builder.Services.AddHttpClient<IReCaptchaService, ReCaptchaService>();
 
 builder.Services.Configure<ReCaptchaConfiguration>(builder.Configuration.GetSection(ReCaptchaConfiguration.ConfigSection));
+builder.Services.Configure<AzureConfiguration>(builder.Configuration.GetSection(AzureConfiguration.SectionKey));
 
 var app = builder.Build();
 
