@@ -30,9 +30,6 @@ namespace PropagatingKindness.Domain.Services
 
         private async Task<Result> ValidateFields(UserDTO userDTO)
         {
-            if (await GetByEmail(userDTO.Email) is not null)
-                return new Result(false, "This email is already registered.");
-            
             // Usuario colocou uma data de nascimento no futuro?
             if (userDTO.Birthday > DateOnly.FromDateTime(DateTime.Today))
                 return new Result(false, "Birthday cannot be in the future.");
@@ -55,6 +52,9 @@ namespace PropagatingKindness.Domain.Services
             {
                 return result;
             }
+
+            if (await GetByEmail(userDTO.Email) is not null)
+                return new Result(false, "This email is already registered.");
 
             // Calcular um Hash
             string hash = HashingHelper.CalculateHashWithSalt(userDTO.Password);
@@ -93,6 +93,17 @@ namespace PropagatingKindness.Domain.Services
             if (!result.Success)
             {
                 return result;
+            }
+
+            // Check if email hasn't changed
+            var userByEmail = await GetByEmail(userDTO.Email);
+            if (userByEmail != null)
+            {
+                // Check if the userID is the same.
+                if (userByEmail.Id != userDTO.Id)
+                { 
+                    return new Result(false, "This email is already in use by other account.");
+                }
             }
 
             User to_Update = await _userRepository.GetById(userDTO.Id);

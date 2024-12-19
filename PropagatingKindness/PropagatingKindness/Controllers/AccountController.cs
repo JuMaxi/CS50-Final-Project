@@ -103,20 +103,31 @@ namespace PropagatingKindness.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> Edit()
+        public async Task<IActionResult> ManageAccount()
         {
             var userId = Convert.ToInt32(HttpContext.User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value);
             
             var user = await _userService.GetById(userId);
 
-            var account = new EditAccountViewModel();
+            var account = new ManageAccountViewModel();
             
             return View(account.FromUser(user));
         }
 
         [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> EditProfile()
+        {
+            var userId = Convert.ToInt32(HttpContext.User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value);
+
+            var user = await _userService.GetById(userId);
+
+            return View(EditProfileViewModel.FromUser(user));
+        }
+
+        [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Edit(EditAccountViewModel accountView, IFormCollection form)
+        public async Task<IActionResult> EditProfile(EditProfileViewModel accountView, IFormCollection form)
         {
             if (string.IsNullOrWhiteSpace(form["g-recaptcha-response"]))
             {

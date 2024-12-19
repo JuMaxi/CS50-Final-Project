@@ -4,11 +4,9 @@ using PropagatingKindness.Domain.Models;
 
 namespace PropagatingKindness.Models.Account
 {
-    public class EditAccountViewModel
+    public class EditProfileViewModel
     {
         public string ErrorMessage { get; set; } = string.Empty;
-
-        public IFormFile Photo { get; set; }
 
         [Required(ErrorMessage = "First Name is required.")]
         [StringLength(40, ErrorMessage = "First Name can't exceed 40 characters.")]
@@ -29,18 +27,6 @@ namespace PropagatingKindness.Models.Account
         [StringLength(7, ErrorMessage = "Post Code to the UK exceed 7 characters.")]
         public string PostCode { get; set; }
 
-        public EditAccountViewModel FromUser(User user)
-        {
-            return new EditAccountViewModel()
-            {
-                //Photo = user.Photo,
-                FirstName = user.Name,
-                LastName = user.LastName,
-                Email = user.Email,
-                Birthday = user.Birthday,
-                PostCode = user.PostCode,
-            };
-        }
         public UserDTO ConvertToDTO()
         {
             return new UserDTO()
@@ -53,6 +39,16 @@ namespace PropagatingKindness.Models.Account
             };
         }
 
-
+        public static EditProfileViewModel FromUser(User user)
+        {
+            return new EditProfileViewModel()
+            {
+                FirstName = user.Name,
+                LastName = user.LastName,
+                Email = user.Email,
+                Birthday = user.Birthday,
+                PostCode = user.PostCode,
+            };
+        }
     }
 }
