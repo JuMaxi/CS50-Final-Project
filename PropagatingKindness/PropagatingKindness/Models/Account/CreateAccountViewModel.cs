@@ -23,6 +23,7 @@ namespace PropagatingKindness.Models.Account
 
         [Required(ErrorMessage = "Password is required.")]
         [StringLength(100, ErrorMessage = "Password can't exceed 100 characters.")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Required(ErrorMessage="Birthday Date is required")]

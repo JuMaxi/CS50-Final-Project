@@ -32,8 +32,13 @@
         </div>
         <div class="col-md-6">
             <label asp-for="Password" for="Password" class="form-label">Password</label>
-            <input asp-for="Password" type="text" name="Password" class="form-control" id="Password" required>
-            <span asp-validation-for="Password" class="text-danger"></span>
+            <div class="input-group">
+                <input asp-for="Password" type="password" name="Password" class="form-control" id="Password" required>
+                <span asp-validation-for="Password" class="text-danger"></span>
+                <button type="button" class="btn btn-outline-secondary border-0" id="togglePassword" aria-label="Toggle password visibility">
+                    <i class="bi bi-eye-slash-fill"></i>
+                </button>
+            </div>
         </div>
         <div class="col-md-6">
             <label asp-for="Birthday" for="Birthday" class="form-label">Birthday</label>
