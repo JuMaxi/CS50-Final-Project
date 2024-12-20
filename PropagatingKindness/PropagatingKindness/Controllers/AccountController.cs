@@ -37,9 +37,9 @@ namespace PropagatingKindness.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(string InputEmail, string InputPassword)
+        public async Task<IActionResult> Login(string InputEmail, string Password)
         {
-            var authenticated = await _userService.Authenticate(InputEmail, InputPassword);
+            var authenticated = await _userService.Authenticate(InputEmail, Password);
 
             if (authenticated.Success)
             {
@@ -113,9 +113,7 @@ namespace PropagatingKindness.Controllers
         [HttpGet]
         public async Task<IActionResult> ManageAccount()
         {
-            var userId = Convert.ToInt32(HttpContext.User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value);
-            
-            var user = await _userService.GetById(userId);
+            var user = await _userService.GetById(GetUserId());
 
             var account = new ManageAccountViewModel();
             
@@ -126,9 +124,7 @@ namespace PropagatingKindness.Controllers
         [HttpGet]
         public async Task<IActionResult> EditProfile()
         {
-            var userId = Convert.ToInt32(HttpContext.User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value);
-
-            var user = await _userService.GetById(userId);
+            var user = await _userService.GetById(GetUserId());
 
             return View(EditProfileViewModel.FromUser(user));
         }
@@ -152,7 +148,9 @@ namespace PropagatingKindness.Controllers
                     return View(accountView);
                 }
 
-                var result = await _userService.Update(accountView.ConvertToDTO());
+                var dto = accountView.ConvertToDTO();
+                dto.Id = GetUserId();
+                var result = await _userService.Update(dto);
 
                 if (result.Success)
                     return RedirectToAction("Login", "Account");
@@ -172,5 +170,18 @@ namespace PropagatingKindness.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        private int GetUserId()
+        {
+            return Convert.ToInt32(HttpContext.User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> EditPassword()
+        {
+            var user = await _userService.GetById(GetUserId());
+
+            return View(EditPasswordViewModel.FromUser(user));
+        }
     }
 }

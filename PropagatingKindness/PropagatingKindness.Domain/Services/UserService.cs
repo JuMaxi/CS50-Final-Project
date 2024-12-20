@@ -110,7 +110,6 @@ namespace PropagatingKindness.Domain.Services
 
             to_Update.Name = userDTO.FirstName;
             to_Update.LastName = userDTO.LastName;
-            to_Update.Photo = userDTO.Photo;
             to_Update.Birthday = userDTO.Birthday;
             to_Update.Email = userDTO.Email;
 

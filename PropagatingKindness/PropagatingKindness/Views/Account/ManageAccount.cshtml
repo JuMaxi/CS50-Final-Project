@@ -9,42 +9,46 @@
                 <div class="col-md-10">
                     <form asp-action="ManageAccount" asp-controller="Account" method="get" enctype="multipart/form-data">
                         <div class="mb-3">
-                            <label asp-for="FirstName" for="FirstName" class="form-label">First name</label>
+                            <label asp-for="FirstName" for="FirstName" class="form-label fs-4 fs-md-3 fs-lg-2">First name</label>
                             <input asp-for="FirstName" type="text" name="FirstName" class="form-control" id="FirstName" disabled>
                             <span asp-validation-for="FirstName" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
-                            <label asp-for="LastName" for="LastName" class="form-label">Last name</label>
+                            <label asp-for="LastName" for="LastName" class="form-label fs-4 fs-md-3 fs-lg-2">Last name</label>
                             <input asp-for="LastName" type="text" name="LastName" class="form-control" id="LastName" disabled>
                             <span asp-validation-for="LastName" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
-                            <label asp-for="Email" for="Email" class="form-label">Email</label>
+                            <label asp-for="Email" for="Email" class="form-label fs-4 fs-md-3 fs-lg-2">Email</label>
                             <input asp-for="Email" type="text" name="Email" class="form-control" id="Email" disabled>
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
-                            <label asp-for="Birthday" for="Birthday" class="form-label">Birthday</label>
+                            <label asp-for="Birthday" for="Birthday" class="form-label fs-4 fs-md-3 fs-lg-2">Birthday</label>
                             <input asp-for="Birthday" type="date" name="Birthday" class="form-control" id="Birthday" disabled>
                             <span asp-validation-for="Birthday" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
-                            <label asp-for="PostCode" for="PostCode" class="form-label">Post Code</label>
+                            <label asp-for="PostCode" for="PostCode" class="form-label fs-4 fs-md-3 fs-lg-2">Post Code</label>
                             <input asp-for="PostCode" type="text" name="PostCode" class="form-control" id="PostCode" disabled>
                             <span asp-validation-for="PostCode" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
-                            <button class="btn btn-primary" type="submit">
-                                <a asp-area="" asp-controller="Account" asp-action="EditProfile">Edit Profile</a>
+                            <button class="btn btn-primary" type="button">
+                                <a class="text-white" asp-area="" asp-controller="Account" asp-action="EditProfile">Edit Profile</a>
                             </button>
                         </div>
-                        <div class="mb-3">
-                            <label asp-for="Password" for="Password" class="form-label">Password</label>
-                            <input asp-for="Password" type="password" name="Password" class="form-control" id="Password" value="********" disabled>
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3">
-                            <button class="btn btn-primary" type="submit">Change Password</button>
+                        <div>
+                            <label asp-for="Password" for="Password" class="form-label fs-4 fs-md-3 fs-lg-2">Password</label>
+                            <div class="input-group">
+                                <div class="d-flex">
+                                    <input asp-for="Password" type="password" name="Password" class="form-control" id="Password" value="*************" disabled>
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                    <button class="btn btn-primary w-100" type="button">
+                                        <a asp-area="" class="text-white" asp-controller="Account" asp-action="EditPassword">Edit Password</a>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -55,7 +59,7 @@
                 <img class="img-fluid" alt="" src="@Model.Photo" />
             </div>
             <div class="row">
-                <button class="btn btn-primary" type="button">Change Photo</button>
+                <button class="btn btn-primary" type="button">Edit Photo</button>
             </div>
         </div>
     </div>
