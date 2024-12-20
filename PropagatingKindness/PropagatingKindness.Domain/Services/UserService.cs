@@ -106,16 +106,39 @@ namespace PropagatingKindness.Domain.Services
                 }
             }
 
-            User to_Update = await _userRepository.GetById(userDTO.Id);
+            User toUpdate = await _userRepository.GetById(userDTO.Id);
 
-            to_Update.Name = userDTO.FirstName;
-            to_Update.LastName = userDTO.LastName;
-            to_Update.Birthday = userDTO.Birthday;
-            to_Update.Email = userDTO.Email;
+            toUpdate.Name = userDTO.FirstName;
+            toUpdate.LastName = userDTO.LastName;
+            toUpdate.Birthday = userDTO.Birthday;
+            toUpdate.Email = userDTO.Email;
 
-            await _userRepository.Update(to_Update);
+            await _userRepository.Update(toUpdate);
 
             return result;
+        }
+        public async Task<Result> UpdatePassword(UserDTO userDTO, string newPassword, string confirmationPassword)
+        {
+            User toUpdate = await _userRepository.GetById(userDTO.Id);
+
+            if (!HashingHelper.ValidateHashWithSalt(toUpdate.Password, userDTO.Password))
+            {
+                return new Result(false, "Invalid password.");
+            }
+
+            if (newPassword != confirmationPassword) 
+            {
+                return new Result(false, "The new password and the password confirmation(repeat) aren't the same.");
+            }
+
+            // Calcular um Hash
+            string hash = HashingHelper.CalculateHashWithSalt(newPassword);
+
+            toUpdate.Password = hash;
+
+            await _userRepository.Update(toUpdate);
+
+            return new Result(true, string.Empty);
         }
     }
 }

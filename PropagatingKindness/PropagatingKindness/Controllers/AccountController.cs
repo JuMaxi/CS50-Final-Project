@@ -183,5 +183,41 @@ namespace PropagatingKindness.Controllers
 
             return View(EditPasswordViewModel.FromUser(user));
         }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> EditPassword(EditPasswordViewModel editPassword, IFormCollection form)
+        {
+            if (string.IsNullOrWhiteSpace(form["g-recaptcha-response"]))
+            {
+                editPassword.ErrorMessage = "Please solve the captcha challenge";
+                return View(editPassword);
+            }
+            if (ModelState.IsValid)
+            {
+                var recaptcha = await _reCaptchaService.ValidateRecaptcha(form["g-recaptcha-response"]);
+                if (!recaptcha.Success)
+                {
+                    editPassword.ErrorMessage = recaptcha.ErrorMessage;
+                    return View(editPassword);
+                }
+
+                var dto = editPassword.ConvertToDTO();
+                dto.Id = GetUserId();
+                var result = await _userService.UpdatePassword(dto, editPassword.NewPassword, editPassword.RepeatPassword);
+
+                if (result.Success)
+                {
+                    await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                    return RedirectToAction("Login");
+                }
+                else
+                {
+                    editPassword.ErrorMessage = result.ErrorMessage;
+                    return View(editPassword);
+                }
+            }
+            return View();
+        }
     }
 }

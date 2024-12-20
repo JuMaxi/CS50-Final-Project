@@ -10,5 +10,6 @@ namespace PropagatingKindness.Domain.Interfaces
         public Task<LoginResult> Authenticate(string login, string password);
         public Task<User> GetById(int id);
         public Task<Result> Update(UserDTO userDTO);
+        public Task<Result> UpdatePassword(UserDTO userDTO, string newPassword, string confirmationPassword);
     }
 }
