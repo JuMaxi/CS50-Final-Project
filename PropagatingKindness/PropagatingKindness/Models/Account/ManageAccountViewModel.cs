@@ -19,6 +19,7 @@ namespace PropagatingKindness.Models.Account
 
         public string PostCode { get; set; }
 
+        public string Password { get; set; }
         public ManageAccountViewModel FromUser(User user)
         {
             return new ManageAccountViewModel()
