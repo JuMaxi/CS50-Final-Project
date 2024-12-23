@@ -27,7 +27,7 @@
     <header class="header p-3">
         <div class="nav-container">
             <div style="display: flex; gap: 15px;">
-                <h2>
+                <h2 class="fs-4 fs-md-3 fs-lg-2">
                     <a asp-area="" asp-controller="Home" asp-action="Index">Propagating Kindness</a>
                 </h2>
             </div>
@@ -38,9 +38,22 @@
                 {
                     var username = ViewContext.HttpContext.User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
 
-                    <button class="btn borderless-btn">
-                        <a asp-area="" asp-controller="Account" asp-action="Logout">Welcome, @username - Logout</a>
-                    </button>
+                    var photo = ViewContext.HttpContext.Session.GetString("userimage");
+
+                    <div>
+                        Welcome, @username!
+                    </div>
+                    <div class="dropdown ms-auto" id="userDropdown">
+                        <a class="d-flex align-items-center text-decoration-none dropdown-toggle" role="button" id="dropdownToggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="@photo" alt="User" class="rounded-circle" width="40" height="40">
+                        </a>
+                        <ul class="user-dropdown-menu list-unstyled p-2 m-1">
+                            <li><a class="dropdown-item p-1" href="#">My Adverts</a></li>
+                            <li><a class="dropdown-item p-1" href="#">Messages</a></li>
+                            <li><a asp-area="" asp-controller="Account" asp-action="ManageAccount" class="dropdown-item p-1">Manage Account</a></li>
+                            <li><a asp-area="" asp-controller="Account" asp-action="Logout" class="dropdown-item p-1">Logout</a></li>
+                        </ul>
+                    </div>
                 }
                 else 
                 {

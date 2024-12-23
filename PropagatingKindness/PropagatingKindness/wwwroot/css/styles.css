@@ -178,12 +178,12 @@ img.cardMainSecond {
     z-index: 1000;
 }
 
-    .dropdown-menu a {
+    .dropdown-menu a{
         padding: 5px;
         text-decoration: none;
     }
 
-        .dropdown-menu a:hover {
+        .dropdown-menu a:hover{
             color: #06ae71;
             background-color: white;
         }
@@ -217,4 +217,20 @@ h2 > a {
     height: auto;
     background-color: #4c8a7345;
     font-weight: 600;
+}
+
+.user-dropdown-menu {
+    display: none; /* Hidden by default */
+    position: absolute;
+    right: 0; /* Align to the right */
+    top: 100%; /* Position below the icon */
+    z-index: 1000;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.175);
+}
+
+.user-dropdown-menu.show {
+    display: block; /* Show when active */
 }

@@ -20,6 +20,14 @@ builder.Services.AddTransient<IAdvertService, AdvertService>();
 builder.Services.AddTransient<IAdvertRepository, AdvertRepository>();
 builder.Services.AddTransient<IPhotosManagerService, PhotosManagerService>();
 
+builder.Services.AddDistributedMemoryCache(); // Required for session
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(20);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(opts => 
     {
@@ -41,6 +49,8 @@ builder.Services.Configure<AzureConfiguration>(builder.Configuration.GetSection(
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseSession(); // Enable session middleware
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
