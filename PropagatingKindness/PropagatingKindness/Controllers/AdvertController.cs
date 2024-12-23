@@ -11,10 +11,15 @@ namespace PropagatingKindness.Controllers
     {   
         private readonly IAdvertService _advertService;
         private readonly IReCaptchaService _reCaptchaService;
-        public AdvertController(IAdvertService advertService, IReCaptchaService reCaptchaService) 
+        private readonly IPhotosManagerService _photosService;
+        public AdvertController(
+            IAdvertService advertService,
+            IReCaptchaService reCaptchaService,
+            IPhotosManagerService photosService) 
         { 
             _advertService = advertService;
             _reCaptchaService = reCaptchaService;
+            _photosService = photosService;
         }
 
         public IActionResult Donation() 
@@ -48,11 +53,32 @@ namespace PropagatingKindness.Controllers
                     return View(advert);
                 }
 
+                var dto = advert.ConvertToDTO();
+
+                if (advert.Photo1 != null) 
+                {
+                    var imagePath = await _photosService.ResizeAndUpload(advert.Photo1, maxWidth: 1000, maxHeight: 1000, blobContainer: "adverts");
+                    dto.Photos.Add(imagePath);
+                }
+                if (advert.Photo2 != null)
+                {
+                    var imagePath = await _photosService.ResizeAndUpload(advert.Photo2, maxWidth: 1000, maxHeight: 1000, blobContainer: "adverts");
+                    dto.Photos.Add(imagePath);
+                }
+                if (advert.Photo3 != null)
+                {
+                    var imagePath = await _photosService.ResizeAndUpload(advert.Photo3, maxWidth: 1000, maxHeight: 1000, blobContainer: "adverts");
+                    dto.Photos.Add(imagePath);
+                }
+                if (advert.Photo4 != null)
+                {
+                    var imagePath = await _photosService.ResizeAndUpload(advert.Photo4, maxWidth: 1000, maxHeight: 1000, blobContainer: "adverts");
+                    dto.Photos.Add(imagePath);
+                }
+
                 var userId = Convert.ToInt32(HttpContext.User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value);
 
-                await _advertService.CreateAdvert(advert.ConvertToDTO(), userId);
-
-                
+                await _advertService.CreateAdvert(dto, userId);
             }
 
             return View("CreateAdvert");

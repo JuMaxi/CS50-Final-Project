@@ -14,8 +14,18 @@
         public User User { get; set; }
         public string Name {  get; set; }
         public string Description { get; set; }
-        public List<Photo> Photos { get; set; }
+        public List<Photo> Photos { get; set; } = [];
         public AdvertStatus Status { get; set; }
-        
+
+        internal void AddPhoto(string photoUrl)
+        {
+            if (string.IsNullOrWhiteSpace(photoUrl))
+                return;
+
+            Photos.Add(new Photo() 
+            {
+                Location = photoUrl,
+            });
+        }
     }
 }

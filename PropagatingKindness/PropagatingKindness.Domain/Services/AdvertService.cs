@@ -17,12 +17,6 @@ namespace PropagatingKindness.Domain.Services
 
         public async Task CreateAdvert(AdvertDTO advertDTO, int userId)
         {
-            List<Photo> p = new();
-            foreach (string item in advertDTO.Photos) 
-            { 
-                //p.Add((Photo)item);
-            }
-
             User user = await _userService.GetById(userId);
 
             Advert advert = new()
@@ -31,10 +25,12 @@ namespace PropagatingKindness.Domain.Services
                 Name = advertDTO.Name,
                 Description = advertDTO.Description,
                 Status = AdvertStatus.Available,
-                Photos = p
             };
-            await _advertRepository.Insert(advert);
 
+            foreach (string item in advertDTO.Photos)
+                advert.AddPhoto(item);
+
+            await _advertRepository.Insert(advert);
         }
 
 
