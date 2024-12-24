@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PropagatingKindness.Domain.DTO;
 using PropagatingKindness.Domain.Interfaces;
 using PropagatingKindness.Models.Advert;
 using PropagatingKindness.Services;
@@ -34,6 +35,38 @@ namespace PropagatingKindness.Controllers
             return View();
         }
 
+        private async Task<AdvertDTO> SavePhotos(CreateAdvertViewModel advert)
+        {
+            var dto = advert.ConvertToDTO();
+
+            if (advert.Photo1 != null)
+            {
+                var imagePath = await _photosService.ResizeAndUpload(advert.Photo1, maxWidth: 1000, maxHeight: 1000, blobContainer: "adverts");
+                dto.Photos.Add(imagePath);
+            }
+            if (advert.Photo2 != null)
+            {
+                var imagePath = await _photosService.ResizeAndUpload(advert.Photo2, maxWidth: 1000, maxHeight: 1000, blobContainer: "adverts");
+                dto.Photos.Add(imagePath);
+            }
+            if (advert.Photo3 != null)
+            {
+                var imagePath = await _photosService.ResizeAndUpload(advert.Photo3, maxWidth: 1000, maxHeight: 1000, blobContainer: "adverts");
+                dto.Photos.Add(imagePath);
+            }
+            if (advert.Photo4 != null)
+            {
+                var imagePath = await _photosService.ResizeAndUpload(advert.Photo4, maxWidth: 1000, maxHeight: 1000, blobContainer: "adverts");
+                dto.Photos.Add(imagePath);
+            }
+            return dto;
+        }
+
+        private int GetUserId()
+        {
+            return Convert.ToInt32(HttpContext.User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value);
+        }
+
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateAdvert(CreateAdvertViewModel advert, IFormCollection form)
@@ -53,35 +86,18 @@ namespace PropagatingKindness.Controllers
                     return View(advert);
                 }
 
-                var dto = advert.ConvertToDTO();
-
-                if (advert.Photo1 != null) 
-                {
-                    var imagePath = await _photosService.ResizeAndUpload(advert.Photo1, maxWidth: 1000, maxHeight: 1000, blobContainer: "adverts");
-                    dto.Photos.Add(imagePath);
-                }
-                if (advert.Photo2 != null)
-                {
-                    var imagePath = await _photosService.ResizeAndUpload(advert.Photo2, maxWidth: 1000, maxHeight: 1000, blobContainer: "adverts");
-                    dto.Photos.Add(imagePath);
-                }
-                if (advert.Photo3 != null)
-                {
-                    var imagePath = await _photosService.ResizeAndUpload(advert.Photo3, maxWidth: 1000, maxHeight: 1000, blobContainer: "adverts");
-                    dto.Photos.Add(imagePath);
-                }
-                if (advert.Photo4 != null)
-                {
-                    var imagePath = await _photosService.ResizeAndUpload(advert.Photo4, maxWidth: 1000, maxHeight: 1000, blobContainer: "adverts");
-                    dto.Photos.Add(imagePath);
-                }
-
-                var userId = Convert.ToInt32(HttpContext.User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value);
-
-                await _advertService.CreateAdvert(dto, userId);
+                await _advertService.CreateAdvert(await SavePhotos(advert), GetUserId());
             }
-
             return View("CreateAdvert");
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> DisplayAdvert()
+        {
+            var userAdverts = await _advertService.GetAllUserAdverts(GetUserId());
+
+            return View(DisplayAdvertViewModel.FromAdverts(userAdverts));
         }
     }
 }

@@ -6,7 +6,9 @@ namespace PropagatingKindness.Domain.Interfaces
     {
         public Task Insert(Advert advert);
         public Task<Advert> GetById(int id);
-        public Task<List<Advert>> GetAll(int skip, int limit);
+        public Task<List<Advert>> GetAllToSearch(int skip, int limit);
         public Task Update(Advert advert);
+
+        public Task<List<Advert>> GetAllUserAdverts(int userId);
     }
 }

@@ -2,6 +2,7 @@
 {
     public enum AdvertStatus
     {
+        UnderReview = 0,
         Available = 1, 
         Promissed = 2,
         Donated = 3,

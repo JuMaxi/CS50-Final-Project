@@ -234,3 +234,13 @@ h2 > a {
 .user-dropdown-menu.show {
     display: block; /* Show when active */
 }
+
+.advert-card-image-container {
+    overflow: hidden;
+}
+
+.advert-card-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

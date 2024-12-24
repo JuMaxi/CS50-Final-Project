@@ -24,7 +24,7 @@ namespace PropagatingKindness.Domain.Services
                 User = user,
                 Name = advertDTO.Name,
                 Description = advertDTO.Description,
-                Status = AdvertStatus.Available,
+                Status = AdvertStatus.UnderReview,
             };
 
             foreach (string item in advertDTO.Photos)
@@ -33,11 +33,12 @@ namespace PropagatingKindness.Domain.Services
             await _advertRepository.Insert(advert);
         }
 
+        public async Task<List<Advert>> GetAllUserAdverts(int userId)
+        {
+            return await _advertRepository.GetAllUserAdverts(userId);
+        }
 
-
-
-
-        public async Task<List<Advert>> GetAll(int limit, int page)
+        public async Task<List<Advert>> GetAllAdverts(int limit, int page)
         {
             int skip = 0;
 
@@ -56,7 +57,7 @@ namespace PropagatingKindness.Domain.Services
                 skip = limit * (page - 1);
             }
 
-            return await _advertRepository.GetAll(skip, limit);
+            return await _advertRepository.GetAllToSearch(skip, limit);
         }
     }
 }

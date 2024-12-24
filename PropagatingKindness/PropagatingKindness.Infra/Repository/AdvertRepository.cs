@@ -22,10 +22,10 @@ namespace PropagatingKindness.Infra.Repository
 
         public async Task<Advert> GetById(int id)
         {
-            return await _dbContext.Adverts.Where(a => a.Id == id).FirstOrDefaultAsync();
+            return await _dbContext.Adverts.Include(p => p.Photos).Where(a => a.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<List<Advert>> GetAll(int skip, int limit)
+        public async Task<List<Advert>> GetAllToSearch(int skip, int limit)
         {
             return await _dbContext.Adverts.Skip(skip).Take(limit).ToListAsync();
         }
@@ -35,6 +35,9 @@ namespace PropagatingKindness.Infra.Repository
             await _dbContext.SaveChangesAsync();
         }
 
-        
+        public async Task<List<Advert>> GetAllUserAdverts(int userId)
+        {
+            return await _dbContext.Adverts.Include(p => p.Photos).Where(u => u.User.Id == userId).ToListAsync();
+        }
     }
 }

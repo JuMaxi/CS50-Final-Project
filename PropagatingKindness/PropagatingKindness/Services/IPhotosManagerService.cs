@@ -1,5 +1,6 @@
 ﻿using Azure.Identity;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Microsoft.Extensions.Options;
 using PropagatingKindness.Configuration;
 using SkiaSharp;
@@ -42,10 +43,14 @@ public class PhotosManagerService : IPhotosManagerService
 
         var containerClient = blobServiceClient.GetBlobContainerClient(blobContainer);
         var blobClient = containerClient.GetBlobClient(blobName);
+        var blobHttpHeader = new BlobHttpHeaders { ContentType = "image/jpeg", ContentDisposition = "inline" };
 
         using (var fileStream = stream)
         {
-            var result = await blobClient.UploadAsync(fileStream, overwrite: true);
+            var result = await blobClient.UploadAsync(fileStream, new BlobUploadOptions() 
+            {
+                HttpHeaders = blobHttpHeader
+            });
         }
 
         return blobClient.Uri.AbsoluteUri;
