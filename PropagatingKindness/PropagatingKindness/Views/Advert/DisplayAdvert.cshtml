@@ -10,30 +10,39 @@
         {
             <!-- Advert Card -->
             <div class="col-md-3 mb-4">
-                <a asp-action="DisplayAdvert" asp-controller="Advert">
                     <div class="card">
-                        <div class="advert-card-image-container ratio ratio-1x1">
-                            <img src="@advert.Photo" class="img-fluid" alt="Advert Photo">
+                        <div class="advert-card-image-container position-relative ratio ratio-1x1">
+                            <a asp-action="DisplayAdvert" asp-controller="Advert">
+                                <img src="@advert.Photo" class="img-fluid" alt="Advert Photo">
+                            </a>
+
+                            <div>
+                                
+                                <button class="btn btn-primary rounded-circle edit-button advert-card-edit-button">
+                                    <i class="bi bi-pencil">
+                                    </i>
+                                </button>
+                                <button class="btn btn-danger rounded-circle edit-button advert-card-delete-button">
+                                    <i class="bi bi-file-excel">
+                                    </i>
+                                </button>
+                            </div>
                         </div>
                         <div class="card-body-advert">
                             <h5 class="card-title-advert">@advert.Name</h5>
                         </div>
                     </div>
-                </a>
                 <div class="btn-group">
                     <div class="d-flex">
                         @if (advert.Status is <= 1)
                         {
                             <button class="btn btn-success status-btn" data-status="Available">Promissed</button>
                             <button class="btn btn-success status-btn" data-status="Available">Donated</button>
-                            <button class="btn btn-success status-btn" data-status="Available">Inactive</button>
-                            <button class="btn btn-success status-btn" data-status="Available">Edit</button>
                         }
                         @if (advert.Status is 2)
                         {
                             <button class="btn btn-success w-100 status-btn" data-status="Available">Available</button>
                             <button class="btn btn-success w-100 status-btn" data-status="Available">Donated</button>
-                            <button class="btn btn-success w-100 status-btn" data-status="Available">Inactive</button>
                         }
                     </div>
                 </div>
