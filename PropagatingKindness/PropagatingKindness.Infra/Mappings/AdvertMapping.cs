@@ -14,6 +14,7 @@ namespace PropagatingKindness.Infra.Mappings
             builder.Property(c => c.Name).IsRequired().HasMaxLength(100).HasColumnName("Name");
             builder.Property(d => d.Description).IsRequired().HasMaxLength(1000).HasColumnName("Description");
             builder.Property(e => e.Status).IsRequired().HasColumnName("Status");
+            builder.Property(e => e.CreatedDate).IsRequired().HasColumnName("Created_Date").HasDefaultValueSql("GETDATE()"); 
             builder.HasMany(f => f.Photos).WithOne().OnDelete(DeleteBehavior.NoAction);
         }
     }

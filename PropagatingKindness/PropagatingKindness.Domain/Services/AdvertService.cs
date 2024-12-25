@@ -25,6 +25,7 @@ namespace PropagatingKindness.Domain.Services
                 Name = advertDTO.Name,
                 Description = advertDTO.Description,
                 Status = AdvertStatus.UnderReview,
+                CreatedDate = DateTime.UtcNow,
             };
 
             foreach (string item in advertDTO.Photos)

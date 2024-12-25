@@ -17,6 +17,7 @@
         public string Description { get; set; }
         public List<Photo> Photos { get; set; } = [];
         public AdvertStatus Status { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         internal void AddPhoto(string photoUrl)
         {
