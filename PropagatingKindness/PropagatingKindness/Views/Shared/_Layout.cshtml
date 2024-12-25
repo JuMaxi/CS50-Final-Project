@@ -38,7 +38,7 @@
                 {
                     var username = ViewContext.HttpContext.User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
 
-                    var photo = ViewContext.HttpContext.Session.GetString("userimage");
+                    var photo = ViewBag.UserAvatar;
 
                     <div>
                         Welcome, @username!

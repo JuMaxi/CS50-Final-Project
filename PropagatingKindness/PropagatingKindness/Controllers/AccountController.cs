@@ -55,7 +55,6 @@ namespace PropagatingKindness.Controllers
 
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsId));
 
-                HttpContext.Session.SetString("userimage", authenticated.User.Photo);
                 return RedirectToAction("Index", "Home");
             }
             else
