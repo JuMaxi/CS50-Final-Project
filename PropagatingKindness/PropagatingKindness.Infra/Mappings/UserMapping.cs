@@ -17,6 +17,7 @@ namespace PropagatingKindness.Infra.Mappings
             builder.Property(f => f.Password).IsRequired().HasMaxLength(100).HasColumnName("Hash");
             builder.Property(g => g.Birthday).IsRequired().HasColumnName("Birthday");
             builder.Property(h => h.PostCode).IsRequired().HasMaxLength(7).HasColumnName("Post_Code");
+            builder.Property(h => h.AccessLevel).IsRequired().HasColumnName("Access_Level").HasDefaultValue(AccessLevel.User);
 
         }
     }
