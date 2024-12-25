@@ -39,5 +39,10 @@ namespace PropagatingKindness.Infra.Repository
         {
             return await _dbContext.Adverts.Include(p => p.Photos).Where(u => u.User.Id == userId).ToListAsync();
         }
+
+        public async Task<List<Advert>> GetAllPendingAdverts()
+        {
+            return await _dbContext.Adverts.Where(x => x.Status == AdvertStatus.UnderReview).ToListAsync();
+        }
     }
 }

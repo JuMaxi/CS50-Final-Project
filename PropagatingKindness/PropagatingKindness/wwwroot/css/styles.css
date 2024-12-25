@@ -265,6 +265,13 @@ h2 > a {
     opacity: 0.75;
 }
 
+.advert-card-buttons-container {
+    left: auto;
+    right: 0px;
+    width: 50px;
+    height: 90px;
+}
+
 #imgAdvert {
     border-radius: 15px 15px 0 0;
 }

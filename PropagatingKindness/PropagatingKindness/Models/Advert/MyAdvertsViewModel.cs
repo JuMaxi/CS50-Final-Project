@@ -1,12 +1,12 @@
 ﻿namespace PropagatingKindness.Models.Advert
 {
-    public class DisplayAdvertViewModel
+    public class MyAdvertsViewModel
     {
         public List<AdvertViewModel> Adverts { get; set; } = [];
 
-        public static DisplayAdvertViewModel FromAdverts(List<Domain.Models.Advert> adverts)
+        public static MyAdvertsViewModel FromAdverts(List<Domain.Models.Advert> adverts)
         {
-            return new DisplayAdvertViewModel()
+            return new MyAdvertsViewModel()
             {
                 Adverts = adverts.Select(adv => AdvertViewModel.FromAdvert(adv)).ToList(),
             };
@@ -28,7 +28,8 @@
             {
                Name = advert.Name,
                Photo = advert.Photos.First().Location,
-               Status = (int)advert.Status
+               Status = (int)advert.Status,
+               Id = advert.Id,
             };
         }
 

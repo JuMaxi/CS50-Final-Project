@@ -48,7 +48,8 @@ namespace PropagatingKindness.Controllers
                 [
                     new(ClaimTypes.Email, authenticated.User.Email), 
                     new(ClaimTypes.Name, authenticated.User.FirstName), 
-                    new(ClaimTypes.NameIdentifier, authenticated.User.Id.ToString())
+                    new(ClaimTypes.NameIdentifier, authenticated.User.Id.ToString()),
+                    new(ClaimTypes.GroupSid, authenticated.User.AccessLevel.ToString()),
                 ];
 
                 var claimsId = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

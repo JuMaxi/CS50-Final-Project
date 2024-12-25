@@ -1,6 +1,6 @@
 ﻿@using Microsoft.Extensions.Options
 @using PropagatingKindness.Configuration
-@model PropagatingKindness.Models.Advert.DisplayAdvertViewModel
+@model PropagatingKindness.Models.Advert.MyAdvertsViewModel
 
 <div class="container mt-5">
     <h1 class="text-center">My Adverts</h1>
@@ -12,7 +12,7 @@
             <div class="col-md-3 mb-4">
                 <div class="cardAdvert">
                     <div class="advert-card-image-container position-relative ratio ratio-1x1">
-                        <a asp-action="DisplayAdvert" asp-controller="Advert">
+                        <a asp-action="View" asp-controller="Advert" asp-route-id="@advert.Id">
                             <img src="@advert.Photo" class="img-fluid" alt="Advert Photo" id="imgAdvert">
                         </a>
 
@@ -45,44 +45,45 @@
                         }
 
                         
-                        <div>
-                            @if (advert.Status == 1)
-                            {
-                                <button class="btn btn-primary rounded-circle edit-button advert-card-edit-button m-1">
+                        @if (advert.Status == 1)
+                        {
+                            <div class="advert-card-buttons-container">
+                                <a asp-action="Edit" asp-controller="Advert" asp-route-id="@advert.Id" class="btn btn-primary rounded-circle edit-button advert-card-edit-button m-1">
                                     <i class="bi bi-pencil"></i>
-                                </button>
-                                <button class="btn btn-danger rounded-circle edit-button advert-card-delete-button m-1">
+                                </a>
+                                <a asp-action="Deactivate" asp-controller="Advert" asp-route-id="@advert.Id" class="btn btn-danger rounded-circle edit-button advert-card-delete-button m-1">
                                     <i class="bi bi-file-excel"></i>
-                                </button>
-                            }
-                        </div>
+                                </a>
+                            </div>
+                        }
+
                     </div>
                     <div class="card-body-advert">
                         <h5 class="card-title-advert">@advert.Name</h5>
                     </div>
-                    <div class="text-center">
-                        @if (advert.Status == 0)
+                    <div class="text-center" style="height: 45px">
+                        @* @if (advert.Status == 0)
                         {
                             <button class="btn btn-danger status-btn m-1 btn-sm" data-status="AwaitingApproval" disabled>Awaiting Approval</button>
-                        }
+                        } *@
                         @if (advert.Status == 1)
                         {
-                            <button class="btn btn-warning status-btn m-1 btn-sm text-white" data-status="Promissed">Promissed</button>
-                            <button class="btn btn-info status-btn m-1 btn-sm text-white" data-status="Donated">Donated</button>
+                            <a asp-action="Promisse" asp-controller="Advert" asp-route-id="@advert.Id" class="btn bg-purple status-btn m-1 btn-sm text-white" data-status="Promissed">Promissed</a>
+                            <a asp-action="Donate" asp-controller="Advert" asp-route-id="@advert.Id" class="btn btn-primary status-btn m-1 btn-sm text-white" data-status="Donated">Donated</a>
                         }
                         @if (advert.Status == 2)
                         {
-                            <button class="btn btn-primary status-btn m-1 btn-sm" data-status="Available">Available</button>
-                            <button class="btn btn-info status-btn m-1 btn-sm text-white" data-status="Donated">Donated</button>
+                            <a asp-action="Available" asp-controller="Advert" asp-route-id="@advert.Id" class="btn btn-info status-btn m-1 btn-sm text-white" data-status="Available">Available</a>
+                            <a asp-action="Donate" asp-controller="Advert" asp-route-id="@advert.Id" class="btn btn-primary status-btn m-1 btn-sm text-white" data-status="Donated">Donated</a>
                         }
-                        @if (advert.Status == 3)
+                        @* @if (advert.Status == 3)
                         {
                             <button class="btn btn-secondary status-btn m-1 btn-sm" data-status="Unavailable" disabled>Unavailable</button>
-                        }
-                        @if (advert.Status == 4)
+                        } *@
+                        @* @if (advert.Status == 4)
                         {
                             <button class="btn btn-primary status-btn m-1 btn-sm" data-status="Available">Available</button>
-                        }
+                        } *@
                     </div>
 
                 </div>

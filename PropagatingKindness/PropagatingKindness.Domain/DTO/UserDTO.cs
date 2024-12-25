@@ -18,6 +18,8 @@ public class UserDTO
 
     public string PostCode { get; set; }
 
+    public int AccessLevel { get; set; }
+
     public static UserDTO FromUser(User user)
     {
         return new UserDTO()
@@ -27,8 +29,9 @@ public class UserDTO
             Email = user.Email,
             FirstName = user.Name,
             Id = user.Id,
-            LastName = user.LastName,
+            LastName = user.LastName,   
             PostCode = user.PostCode,
+            AccessLevel = (int)user.AccessLevel,
         };
     }
 }

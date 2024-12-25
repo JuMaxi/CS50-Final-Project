@@ -59,5 +59,10 @@ namespace PropagatingKindness.Domain.Services
 
             return await _advertRepository.GetAllToSearch(skip, limit);
         }
+
+        public async Task<List<Advert>> GetAllPendingAdverts()
+        {
+            return await _advertRepository.GetAllPendingAdverts();
+        }
     }
 }

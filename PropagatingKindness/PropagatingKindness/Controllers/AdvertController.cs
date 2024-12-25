@@ -93,11 +93,70 @@ namespace PropagatingKindness.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> DisplayAdvert()
+        public async Task<IActionResult> MyAdverts()
         {
             var userAdverts = await _advertService.GetAllUserAdverts(GetUserId());
 
-            return View(DisplayAdvertViewModel.FromAdverts(userAdverts));
+            return View(MyAdvertsViewModel.FromAdverts(userAdverts));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> View(int advertId)
+        {
+            // TODO: This method should retrieve the advert by ID, check if it's not Inactive, and render a view
+            throw new NotImplementedException();
+        }
+
+        [Authorize]
+        [HttpGet]
+        public Task<IActionResult> Promisse(int advertId)
+        {
+            // TODO: This method should retrieve the advert by ID, check if the current user owns it,
+            //       check if the current status allows changing to Promissed, change the status, and redirect to /MyAdverts
+            throw new NotImplementedException();
+        }
+
+        [Authorize]
+        [HttpGet]
+        public Task<IActionResult> Donate(int advertId)
+        {
+            // TODO: This method should retrieve the advert by ID, check if the current user owns it,
+            //       check if the current status allows changing to Donated, change the status, and redirect to /MyAdverts
+            throw new NotImplementedException();
+        }
+
+        [Authorize]
+        [HttpGet]
+        public Task<IActionResult> Available(int advertId)
+        {
+            // TODO: This method should retrieve the advert by ID, check if the current user owns it,
+            //       check if the current status allows changing it back to Available, change the status, and redirect to /MyAdverts
+            throw new NotImplementedException();
+        }
+
+        [Authorize]
+        [HttpGet]
+        public Task<IActionResult> Deactivate(int advertId)
+        {
+            // TODO: This method should retrieve the advert by ID, check if the current user owns it,
+            //       check if the current status allows changing to Deactivated, change the status, and redirect to /MyAdverts
+            throw new NotImplementedException();
+        }
+
+        [Authorize]
+        [HttpGet]
+        public Task<IActionResult> Edit(int advertId)
+        {
+            // TODO: This method should retrieve the advert by ID, check if the current user owns it,
+            //       check if the current status allows editing, and render the view for the user to edit it
+            throw new NotImplementedException();
+        }
+
+        [RequiresAdmin]
+        [HttpGet]
+        public async Task<IActionResult> Pending()
+        {
+            throw new NotImplementedException();
         }
     }
 }
