@@ -269,4 +269,29 @@ h2 > a {
     border-radius: 15px 15px 0 0;
 }
 
+.advert-card-ribbon {
+    position: absolute;
+    top: 40%;
+    left: -25px;
+    width: 70%;
+    height: 30px;
+    background-color: #ff6347; /* Ribbon color (tomato) */
+    color: white;
+    text-align: center;
+    transform: rotate(-45deg); 
+    transform-origin: 0 0;
+    font-size: 14px;
+    padding: 5px 0;
+    z-index: 15;
+}
 
+.advert-card-ribbon span {
+    display: block;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.bg-purple {
+    background-color: purple !important; /* Ensures it overrides Bootstrap styles if needed */
+    color: white; 
+}

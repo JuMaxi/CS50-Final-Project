@@ -16,6 +16,35 @@
                             <img src="@advert.Photo" class="img-fluid" alt="Advert Photo" id="imgAdvert">
                         </a>
 
+                        @if (advert.Status == 0)
+                        {
+                            <div class="advert-card-ribbon bg-warning bg-gradient">
+                                <span>Reviewing</span>
+                            </div>
+                        }
+
+                        @if (advert.Status == 1)
+                        {
+                            <div class="advert-card-ribbon bg-primary bg-gradient">
+                                <span>Available</span>
+                            </div>
+                        }
+
+                        @if (advert.Status == 2)
+                        {
+                            <div class="advert-card-ribbon bg-purple bg-gradient">
+                                <span>Promissed</span>
+                            </div>
+                        }
+
+                        @if (advert.Status == 3)
+                        {
+                            <div class="advert-card-ribbon bg-success bg-gradient">
+                                <span>Donated</span>
+                            </div>
+                        }
+
+                        
                         <div>
                             @if (advert.Status == 1)
                             {
