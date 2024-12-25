@@ -44,6 +44,13 @@
                             </div>
                         }
 
+                        @if (advert.Status == 4)
+                        {
+                            <div class="advert-card-ribbon bg-secondary bg-gradient">
+                                <span>Inactive</span>
+                            </div>
+                        }
+
                         
                         @if (advert.Status == 1)
                         {
@@ -69,12 +76,12 @@
                         @if (advert.Status == 1)
                         {
                             <a asp-action="Promisse" asp-controller="Advert" asp-route-id="@advert.Id" class="btn bg-purple status-btn m-1 btn-sm text-white" data-status="Promissed">Promissed</a>
-                            <a asp-action="Donate" asp-controller="Advert" asp-route-id="@advert.Id" class="btn btn-primary status-btn m-1 btn-sm text-white" data-status="Donated">Donated</a>
+                            <a asp-action="Donate" asp-controller="Advert" asp-route-id="@advert.Id" class="btn bg-success status-btn m-1 btn-sm text-white" data-status="Donated">Donated</a>
                         }
                         @if (advert.Status == 2)
                         {
-                            <a asp-action="Available" asp-controller="Advert" asp-route-id="@advert.Id" class="btn btn-info status-btn m-1 btn-sm text-white" data-status="Available">Available</a>
-                            <a asp-action="Donate" asp-controller="Advert" asp-route-id="@advert.Id" class="btn btn-primary status-btn m-1 btn-sm text-white" data-status="Donated">Donated</a>
+                            <a asp-action="Available" asp-controller="Advert" asp-route-id="@advert.Id" class="btn bg-primary status-btn m-1 btn-sm text-white" data-status="Available">Available</a>
+                            <a asp-action="Donate" asp-controller="Advert" asp-route-id="@advert.Id" class="btn bg-success status-btn m-1 btn-sm text-white" data-status="Donated">Donated</a>
                         }
                         @* @if (advert.Status == 3)
                         {

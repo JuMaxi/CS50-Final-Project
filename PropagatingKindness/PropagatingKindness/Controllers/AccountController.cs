@@ -26,6 +26,12 @@ namespace PropagatingKindness.Controllers
         }
 
         [HttpGet]
+        public IActionResult Error()
+        {
+            return View();
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Login()
         {
             if (HttpContext.User?.Identity?.IsAuthenticated ?? false)

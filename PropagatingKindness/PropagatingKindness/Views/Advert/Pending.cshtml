@@ -1,0 +1,40 @@
+﻿@using Microsoft.Extensions.Options
+@using PropagatingKindness.Configuration
+@model PropagatingKindness.Models.Advert.PendingAdvertsViewModel
+
+<div class="container mt-5">
+    <h1 class="text-center">Adverts Pending Approval</h1>
+    <div class="row mt-4">
+
+        @foreach (var advert in Model.Adverts)
+        {
+            <!-- Advert Card -->
+            <div class="col-md-3 mb-4">
+                <div class="cardAdvert">
+                    <div class="advert-card-image-container position-relative ratio ratio-1x1">
+                        <a asp-action="View" asp-controller="Advert" asp-route-id="@advert.Id">
+                            <img src="@advert.Photo" class="img-fluid" alt="Advert Photo" id="imgAdvert">
+                        </a>
+
+                        <div class="advert-card-ribbon bg-warning bg-gradient">
+                            <span>Reviewing</span>
+                        </div>
+
+                    </div>
+                    <div class="card-body-advert">
+                        <h5 class="card-title-advert">@advert.Name</h5>
+                    </div>
+                    <div class="text-center" style="height: 45px">
+                        <a asp-action="Available" asp-controller="Advert" asp-route-id="@advert.Id" class="btn bg-success status-btn m-1 btn-sm text-white" data-status="Available">Approve</a>
+                        <a asp-action="Deactivate" asp-controller="Advert" asp-route-id="@advert.Id" class="btn bg-secondary status-btn m-1 btn-sm text-white" data-status="Donated">Decline</a>
+                    </div>
+
+                </div>
+                
+            </div>
+        }
+    </div>
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+</div>

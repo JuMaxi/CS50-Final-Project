@@ -129,7 +129,7 @@ namespace PropagatingKindness.Controllers
         [HttpGet]
         public Task<IActionResult> Available(int advertId)
         {
-            // TODO: This method should retrieve the advert by ID, check if the current user owns it,
+            // TODO: This method should retrieve the advert by ID, check if the current user owns it (Or, the current user is admin),
             //       check if the current status allows changing it back to Available, change the status, and redirect to /MyAdverts
             throw new NotImplementedException();
         }
@@ -138,7 +138,7 @@ namespace PropagatingKindness.Controllers
         [HttpGet]
         public Task<IActionResult> Deactivate(int advertId)
         {
-            // TODO: This method should retrieve the advert by ID, check if the current user owns it,
+            // TODO: This method should retrieve the advert by ID, check if the current user owns it (Or, the current user is admin),
             //       check if the current status allows changing to Deactivated, change the status, and redirect to /MyAdverts
             throw new NotImplementedException();
         }
@@ -156,7 +156,9 @@ namespace PropagatingKindness.Controllers
         [HttpGet]
         public async Task<IActionResult> Pending()
         {
-            throw new NotImplementedException();
+            var pending = await _advertService.GetAllPendingAdverts();
+            var viewModel = PendingAdvertsViewModel.FromAdverts(pending);
+            return View(viewModel);
         }
     }
 }
