@@ -65,11 +65,7 @@ namespace PropagatingKindness.Domain.Services
         {
             return await _advertRepository.GetAllPendingAdverts();
         }
-
-        public async Task UpdateAdvert(AdvertDTO advertDTO, int userId)
-        {
-
-        }
+       
         public async Task<Result<Advert>> CheckUserOwnsAdvert(int userId, int advertId)
         {
             Advert advert = await GetAdvertById(advertId);
@@ -81,7 +77,22 @@ namespace PropagatingKindness.Domain.Services
 
             return new Result<Advert>(advert);
         }
+        public async Task<Result<Advert>> UpdateAdvert(AdvertDTO advertDTO)
+        {
+            Result<Advert> advert = await CheckUserOwnsAdvert(advertDTO.UserId, advertDTO.Id);
 
+            if (advert.Success) 
+            {
+                advert.Content.Name = advertDTO.Name;
+                advert.Content.Description = advertDTO.Description;
+                advert.Content.Status = 0;
+
+                await _advertRepository.Update(advert.Content);
+
+                return advert;
+            };
+            return advert;
+        }
         private async Task<Advert> GetAdvertById(int advertId)
         {
             return await _advertRepository.GetById(advertId);

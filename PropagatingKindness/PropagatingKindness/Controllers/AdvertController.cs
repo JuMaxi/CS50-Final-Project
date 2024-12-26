@@ -163,9 +163,42 @@ namespace PropagatingKindness.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-       
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, EditAdvertViewModel advertView, IFormCollection form)
+        {
+            if (string.IsNullOrWhiteSpace(form["g-recaptcha-response"]))
+            {
+                advertView.ErrorMessage = "Please solve the captcha challenge";
+                return View(advertView);
+            }
 
+            if (ModelState.IsValid)
+            {
+                var recaptcha = await _reCaptchaService.ValidateRecaptcha(form["g-recaptcha-response"]);
+                if (!recaptcha.Success)
+                {
+                    advertView.ErrorMessage = recaptcha.ErrorMessage;
+                    return View(advertView);
+                }
 
+                var dto = advertView.ConvertToDTO();
+                dto.Id = id;
+                dto.UserId = GetUserId();
+                    
+                var result = await _advertService.UpdateAdvert(dto);
+
+                if (result.Success) 
+                {
+                    return RedirectToAction("MyAdverts");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            return View();
+        }
 
         [RequiresAdmin]
         [HttpGet]
