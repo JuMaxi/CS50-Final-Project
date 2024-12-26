@@ -69,8 +69,9 @@ namespace PropagatingKindness.Domain.Services
         public async Task<Result<Advert>> CheckUserOwnsAdvert(int userId, int advertId)
         {
             Advert advert = await GetAdvertById(advertId);
+            User user = await _userService.GetById(userId);
 
-            if (advert is null || advert.User.Id != userId) 
+            if (advert is null || (advert.User.Id != userId && !user.IsAdmin)) 
             {
                 return new Result<Advert>(false, string.Empty);
             }
