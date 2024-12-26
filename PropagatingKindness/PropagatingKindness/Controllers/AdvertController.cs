@@ -129,6 +129,7 @@ namespace PropagatingKindness.Controllers
         [HttpGet]
         public Task<IActionResult> Available(int advertId)
         {
+            string previousUrl = HttpContext.Request.Headers.TryGetValue("Referer", out var p) ? p : string.Empty; // LocalRedirect
             // TODO: This method should retrieve the advert by ID, check if the current user owns it (Or, the current user is admin),
             //       check if the current status allows changing it back to Available, change the status, and redirect to /MyAdverts
             throw new NotImplementedException();

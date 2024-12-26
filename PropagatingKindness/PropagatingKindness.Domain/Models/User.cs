@@ -19,5 +19,7 @@ public class User
     public DateOnly Birthday { get; set; }
     public string PostCode { get; set; }
     public AccessLevel AccessLevel { get; set; }
+
+    public bool IsAdmin => AccessLevel == AccessLevel.Admin;
     
 }
