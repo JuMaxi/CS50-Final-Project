@@ -25,3 +25,16 @@ public class LoginResult : Result
         User = userDTO;
     }
 }
+
+public class Result<T> : Result
+{
+    public T Content { get; set; }
+    public Result(bool success, string errorMessage) : base(success, errorMessage)
+    {
+    }
+
+    public Result(T content) : base(true, string.Empty)
+    {
+        Content = content;
+    }
+}

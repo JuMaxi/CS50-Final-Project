@@ -1,0 +1,41 @@
+﻿@using Microsoft.Extensions.Options
+@using PropagatingKindness.Configuration
+@model PropagatingKindness.Models.Advert.EditAdvertViewModel
+@inject IOptions<ReCaptchaConfiguration> ReCaptcha
+<div class="container mt-5">
+    @if (!string.IsNullOrEmpty(Model?.ErrorMessage))
+    {
+        <h2 style="color:crimson"> ⚠️ @Model.ErrorMessage </h2>
+    }
+    <h1 class="text-center mb-4">Update Advert</h1>
+    <form class="row g-3" asp-action="Edit" asp-controller="Advert" method="post" enctype="multipart/form-data">
+        <!-- Name Field -->
+        <div class="mb-3">
+            <label asp-for="Name" for="Name" class="form-label">Name</label>
+            <input asp-for="Name" type="text" name="Name" class="form-control" id="Name" placeholder="Enter the name of your ad" required>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <!-- Description Field -->
+        <div class="mb-3">
+            <label asp-for="Description" for="Description" class="form-label">Description</label>
+            <textarea asp-for="Description" type="text" name="Description" class="form-control" id="Description" rows="4" placeholder="Enter a description for your ad" required></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <!-- Photos Field -->
+        <div class="mb-3">
+           <p class="text-black">If you need to change the photos, please inactivate this advert and create a new one with the new photos.</p> 
+        </div>
+        <!--reCaptcha-->
+        <div class="col-12">
+            <div class="g-recaptcha" data-sitekey="@ReCaptcha.Value.SiteKey"></div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+</div>

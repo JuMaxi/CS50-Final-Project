@@ -65,5 +65,26 @@ namespace PropagatingKindness.Domain.Services
         {
             return await _advertRepository.GetAllPendingAdverts();
         }
+
+        public async Task UpdateAdvert(AdvertDTO advertDTO, int userId)
+        {
+
+        }
+        public async Task<Result<Advert>> CheckUserOwnsAdvert(int userId, int advertId)
+        {
+            Advert advert = await GetAdvertById(advertId);
+
+            if (advert is null || advert.User.Id != userId) 
+            {
+                return new Result<Advert>(false, string.Empty);
+            }
+
+            return new Result<Advert>(advert);
+        }
+
+        private async Task<Advert> GetAdvertById(int advertId)
+        {
+            return await _advertRepository.GetById(advertId);
+        }
     }
 }

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PropagatingKindness.Domain.DTO;
 using PropagatingKindness.Domain.Interfaces;
+using PropagatingKindness.Domain.Services;
+using PropagatingKindness.Models.Account;
 using PropagatingKindness.Models.Advert;
 using PropagatingKindness.Services;
 
@@ -146,12 +148,24 @@ namespace PropagatingKindness.Controllers
 
         [Authorize]
         [HttpGet]
-        public Task<IActionResult> Edit(int advertId)
+        public async Task<IActionResult> Edit(int id)
         {
-            // TODO: This method should retrieve the advert by ID, check if the current user owns it,
+            // This method retrieve the advert by ID, check if the current user owns it,
             //       check if the current status allows editing, and render the view for the user to edit it
-            throw new NotImplementedException();
+            // User can't change the photos. If it is needed, must Inactive the current advert and create a new one.
+
+            var result = await _advertService.CheckUserOwnsAdvert(GetUserId(), id);
+
+            if (result.Success) 
+            {
+                return View(EditAdvertViewModel.FromAdvert(result.Content));
+            }
+            return RedirectToAction("Index", "Home");
         }
+
+       
+
+
 
         [RequiresAdmin]
         [HttpGet]

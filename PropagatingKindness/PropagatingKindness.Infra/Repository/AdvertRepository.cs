@@ -22,7 +22,11 @@ namespace PropagatingKindness.Infra.Repository
 
         public async Task<Advert> GetById(int id)
         {
-            return await _dbContext.Adverts.Include(p => p.Photos).Where(a => a.Id == id).FirstOrDefaultAsync();
+            return await _dbContext.Adverts
+                .Include(p => p.Photos)
+                .Include(u => u.User)
+                .Where(a => a.Id == id)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<List<Advert>> GetAllToSearch(int skip, int limit)
