@@ -364,6 +364,7 @@ h2 > a {
     border-radius: 15px;
     margin: 0 10px;
     word-wrap: break-word;
+    position: relative;
 }
 
 .chat-bubble.sent {
@@ -372,6 +373,22 @@ h2 > a {
 
 .chat-bubble.received {
     background-color: #e2e3e5;
+}
+
+.chat-bubble .bubble-icon {
+    position: absolute;
+    font-size: 12px;
+    color: #6c757d;
+}
+
+.chat-bubble-status-sent {
+    bottom: -5px;
+    left: 0px;
+}
+
+.chat-bubble-status-received {
+    bottom: -5px;
+    right: 0px;
 }
 
 .avatar {
