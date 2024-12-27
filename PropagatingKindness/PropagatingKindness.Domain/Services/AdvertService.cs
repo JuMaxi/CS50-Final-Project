@@ -112,8 +112,34 @@ namespace PropagatingKindness.Domain.Services
                     advert.Content.Status = AdvertStatus.Inactive;
 
                     await _advertRepository.Update(advert.Content);
+                }
+                else
+                {
+                    // Making success false to return the user for the home page instead of my adverts. This function
+                    //      is called at advertController
+                    advert.Success = false;
+                }
+            }
+            return advert;
+        }
 
-                    return advert;
+        public async Task<Result<Advert>> ChangeStatusAdvertToAvailable(int userId, int advertId)
+        {
+            Result<Advert> advert = await CheckUserOwnsAdvert(userId, advertId);
+
+            User user = await _userService.GetById(userId);
+
+            if (advert.Success) 
+            {
+                if (user.IsAdmin || advert.Content.Status == AdvertStatus.Promissed) 
+                { 
+                    advert.Content.Status = AdvertStatus.Available;
+
+                    await _advertRepository.Update(advert.Content);
+                }
+                else
+                {
+                    advert.Success = false;
                 }
             }
             return advert;

@@ -129,19 +129,26 @@ namespace PropagatingKindness.Controllers
 
         [Authorize]
         [HttpGet]
-        public Task<IActionResult> Available(int advertId)
+        public async Task<IActionResult> Available(int id)
         {
-            string previousUrl = HttpContext.Request.Headers.TryGetValue("Referer", out var p) ? p : string.Empty; // LocalRedirect
-            // TODO: This method should retrieve the advert by ID, check if the current user owns it (Or, the current user is admin),
+            //  This method retrieves the advert by ID, check if the current user owns it (Or, the current user is admin),
             //       check if the current status allows changing it back to Available, change the status, and redirect to /MyAdverts
-            throw new NotImplementedException();
+
+            var result = await _advertService.ChangeStatusAdvertToAvailable(GetUserId(), id);
+
+            if (result.Success)
+            {
+                return RedirectToAction("MyAdverts");
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> Deactivate(int id)
         {
-            // This method should retrieve the advert by ID, check if the current user owns it (Or, the current user is admin),
+            // This method retrieves the advert by ID, check if the current user owns it (Or, the current user is admin),
             //       check if the current status allows changing to Deactivated, change the status, and redirect to /MyAdverts
             var result = await _advertService.DeactivateAdvert(GetUserId(), id);
 
