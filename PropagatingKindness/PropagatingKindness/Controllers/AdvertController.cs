@@ -139,11 +139,17 @@ namespace PropagatingKindness.Controllers
 
         [Authorize]
         [HttpGet]
-        public Task<IActionResult> Deactivate(int advertId)
+        public async Task<IActionResult> Deactivate(int id)
         {
-            // TODO: This method should retrieve the advert by ID, check if the current user owns it (Or, the current user is admin),
+            // This method should retrieve the advert by ID, check if the current user owns it (Or, the current user is admin),
             //       check if the current status allows changing to Deactivated, change the status, and redirect to /MyAdverts
-            throw new NotImplementedException();
+            var result = await _advertService.DeactivateAdvert(GetUserId(), id);
+
+            if (result.Success)
+            {
+                return RedirectToAction("MyAdverts");
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         [Authorize]
