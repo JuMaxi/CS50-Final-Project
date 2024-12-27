@@ -120,11 +120,18 @@ namespace PropagatingKindness.Controllers
 
         [Authorize]
         [HttpGet]
-        public Task<IActionResult> Donate(int advertId)
+        public async Task<IActionResult> Donate(int id)
         {
-            // TODO: This method should retrieve the advert by ID, check if the current user owns it,
+            // This method should retrieve the advert by ID, check if the current user owns it,
             //       check if the current status allows changing to Donated, change the status, and redirect to /MyAdverts
-            throw new NotImplementedException();
+            
+            var result = await _advertService.DonateAdvert(GetUserId(), id);
+
+            if (result.Success)
+            {
+                return RedirectToAction("MyAdverts");
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         [Authorize]
@@ -134,7 +141,7 @@ namespace PropagatingKindness.Controllers
             //  This method retrieves the advert by ID, check if the current user owns it (Or, the current user is admin),
             //       check if the current status allows changing it back to Available, change the status, and redirect to /MyAdverts
 
-            var result = await _advertService.ChangeStatusAdvertToAvailable(GetUserId(), id);
+            var result = await _advertService.ActivateAdvert(GetUserId(), id);
 
             if (result.Success)
             {

@@ -123,7 +123,7 @@ namespace PropagatingKindness.Domain.Services
             return advert;
         }
 
-        public async Task<Result<Advert>> ChangeStatusAdvertToAvailable(int userId, int advertId)
+        public async Task<Result<Advert>> ActivateAdvert(int userId, int advertId)
         {
             Result<Advert> advert = await CheckUserOwnsAdvert(userId, advertId);
 
@@ -134,6 +134,30 @@ namespace PropagatingKindness.Domain.Services
                 if (user.IsAdmin || advert.Content.Status == AdvertStatus.Promissed) 
                 { 
                     advert.Content.Status = AdvertStatus.Available;
+
+                    await _advertRepository.Update(advert.Content);
+                }
+                else
+                {
+                    advert.Success = false;
+                }
+            }
+            return advert;
+        }
+
+        public async Task<Result<Advert>> DonateAdvert(int userId, int advertId)
+        {
+            Result<Advert> advert = await CheckUserOwnsAdvert(userId, advertId);
+
+            User user = await _userService.GetById(userId);
+
+            List<AdvertStatus> allowedStatus = [AdvertStatus.Promissed, AdvertStatus.Available];
+
+            if (advert.Success) 
+            {
+                if (user.IsAdmin || allowedStatus.Contains(advert.Content.Status))
+                {
+                    advert.Content.Status = AdvertStatus.Donated;
 
                     await _advertRepository.Update(advert.Content);
                 }
