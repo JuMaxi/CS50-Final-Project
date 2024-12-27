@@ -168,5 +168,44 @@ namespace PropagatingKindness.Domain.Services
             }
             return advert;
         }
+
+        public async Task<Result<Advert>> PromisseAdvert(int userId, int advertId)
+        {
+            Result<Advert> advert = await CheckUserOwnsAdvert(userId,advertId);
+
+            User user = await _userService.GetById(userId);
+
+            if (advert.Success)
+            {
+                if (user.IsAdmin || advert.Content.Status == AdvertStatus.Available)
+                {
+                    advert.Content.Status = AdvertStatus.Promissed;
+
+                    await _advertRepository.Update(advert.Content);
+                }
+                else
+                {
+                    advert.Success = false;
+                }
+            }
+
+            return advert;
+        }
+
+        public async Task<Result<Advert>> DisplayAdvert(int userId, int advertId)
+        {
+            Result<Advert> advert = await CheckUserOwnsAdvert(userId, advertId);
+
+            User user = await _userService.GetById(userId);
+
+            if (advert.Success) 
+            { 
+                if (!user.IsAdmin && advert.Content.Status == AdvertStatus.Inactive) 
+                {
+                    advert.Success = false; 
+                }
+            }
+            return advert;
+        }
     }
 }

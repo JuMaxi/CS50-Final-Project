@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PropagatingKindness.Domain.DTO;
 using PropagatingKindness.Domain.Interfaces;
-using PropagatingKindness.Domain.Services;
-using PropagatingKindness.Models.Account;
 using PropagatingKindness.Models.Advert;
 using PropagatingKindness.Services;
 
@@ -90,7 +88,7 @@ namespace PropagatingKindness.Controllers
 
                 await _advertService.CreateAdvert(await SavePhotos(advert), GetUserId());
             }
-            return View("CreateAdvert");
+            return View("MyAdverts");
         }
 
         [Authorize]
@@ -102,27 +100,36 @@ namespace PropagatingKindness.Controllers
             return View(MyAdvertsViewModel.FromAdverts(userAdverts));
         }
 
+        [Authorize]
         [HttpGet]
-        public async Task<IActionResult> View(int advertId)
+        public async Task<IActionResult> View(int id)
         {
-            // TODO: This method should retrieve the advert by ID, check if it's not Inactive, and render a view
+            // This method retrieves the advert by ID, check if it's not Inactive, and render a view
             throw new NotImplementedException();
         }
 
         [Authorize]
         [HttpGet]
-        public Task<IActionResult> Promisse(int advertId)
+        public async Task<IActionResult> Promisse(int id)
         {
-            // TODO: This method should retrieve the advert by ID, check if the current user owns it,
+            // This method retrieves the advert by ID, check if the current user owns it,
             //       check if the current status allows changing to Promissed, change the status, and redirect to /MyAdverts
-            throw new NotImplementedException();
+
+            var result = await _advertService.PromisseAdvert(GetUserId(), id);
+
+            if (result.Success)
+            {
+                return RedirectToAction("MyAdverts");
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> Donate(int id)
         {
-            // This method should retrieve the advert by ID, check if the current user owns it,
+            // This method retrieves the advert by ID, check if the current user owns it,
             //       check if the current status allows changing to Donated, change the status, and redirect to /MyAdverts
             
             var result = await _advertService.DonateAdvert(GetUserId(), id);
@@ -170,7 +177,7 @@ namespace PropagatingKindness.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            // This method retrieve the advert by ID, check if the current user owns it,
+            // This method retrieves the advert by ID, check if the current user owns it,
             //       check if the current status allows editing, and render the view for the user to edit it
             // User can't change the photos. If it is needed, must Inactive the current advert and create a new one.
 
