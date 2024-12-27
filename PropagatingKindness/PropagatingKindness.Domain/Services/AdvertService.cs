@@ -103,13 +103,18 @@ namespace PropagatingKindness.Domain.Services
         {
             Result<Advert> advert = await CheckUserOwnsAdvert(userId, advertId);
 
-            if (advert.Success && advert.Content.Status is not AdvertStatus.Donated) 
+            User user = await _userService.GetById(userId);
+
+            if (advert.Success) 
             {
-                advert.Content.Status = AdvertStatus.Inactive;
+                if (user.IsAdmin || advert.Content.Status == AdvertStatus.Available) 
+                {
+                    advert.Content.Status = AdvertStatus.Inactive;
 
-                await _advertRepository.Update(advert.Content);
+                    await _advertRepository.Update(advert.Content);
 
-                return advert;
+                    return advert;
+                }
             }
             return advert;
         }
