@@ -23,6 +23,9 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IAdvertService, AdvertService>();
 builder.Services.AddTransient<IAdvertRepository, AdvertRepository>();
 builder.Services.AddTransient<IPhotosManagerService, PhotosManagerService>();
+builder.Services.AddTransient<IChatRepository, ChatRepository>();
+builder.Services.AddTransient<IChatService, ChatService>();
+
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(opts => 

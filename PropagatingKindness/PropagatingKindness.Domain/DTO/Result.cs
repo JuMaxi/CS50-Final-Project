@@ -10,6 +10,9 @@ public class Result
         Success = success;
         ErrorMessage = errorMessage;
     }
+
+    public static Result OK => new Result(true, string.Empty);
+    public static Result Fail(string msg) => new Result(false, msg);
 }
 
 public class LoginResult : Result

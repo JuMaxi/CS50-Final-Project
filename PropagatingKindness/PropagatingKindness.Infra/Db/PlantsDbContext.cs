@@ -21,6 +21,7 @@ public class PlantsDbContext : DbContext
     public DbSet<Tag> Tags { get; set; }
     public DbSet<Photo> Photos { get; set; }
     public DbSet<BlogPostContent> PostContents { get; set; }
+    public DbSet<Chat> Chats { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
