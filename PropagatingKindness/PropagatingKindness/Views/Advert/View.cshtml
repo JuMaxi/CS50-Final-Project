@@ -1,0 +1,41 @@
+﻿@using Microsoft.Extensions.Options
+@using PropagatingKindness.Configuration
+@model PropagatingKindness.Models.Advert.ViewAdvertViewModel
+<div class="container mt-4">
+    <div class="row">
+        <!-- Thumbnails Bar -->
+        <div class="col-md-2 thumbnails-bar">
+            @foreach(var photo in Model.Photos)
+            {
+                <div class="thumbnail">
+                    <img src="@photo" alt="Thumbnail 1">
+                </div>
+            }
+        </div>
+
+        <!-- Main Image and Advert Details -->
+        <div class="col-md-10 d-flex">
+            <!-- Main Image -->
+            <div class="col-md-6 me-3">
+                <img src="@Model.Photos[0]" alt="Main Advert Image" class="main-image" id="main-advert-image"> 
+            </div>
+
+            <!-- Advert Details -->
+            <div class="col-md-6">
+                <h2>@Model.Name</h2>
+                <p class="text-muted">@Model.Description</p>
+                <div class="d-flex align-items-center mb-3">
+                    <img src="@Model.UserPhoto" alt="User Photo" class="user-photo">
+                    <div>
+                        <h5 class="mb-0">@Model.UserName</h5>
+                        <small class="text-muted">Postcode @Model.UserPostCode</small>
+                    </div>
+                </div>
+                <button class="btn btn-primary">Send Message</button>
+            </div>
+        </div>
+    </div>
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+</div>

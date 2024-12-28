@@ -88,7 +88,7 @@ namespace PropagatingKindness.Controllers
 
                 await _advertService.CreateAdvert(await SavePhotos(advert), GetUserId());
             }
-            return View("MyAdverts");
+            return RedirectToAction("MyAdverts");
         }
 
         [Authorize]
@@ -100,12 +100,13 @@ namespace PropagatingKindness.Controllers
             return View(MyAdvertsViewModel.FromAdverts(userAdverts));
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<IActionResult> View(int id)
         {
             // This method retrieves the advert by ID, check if it's not Inactive, and render a view
-            throw new NotImplementedException();
+
+            var advert = await _advertService.GetAdvertById(id);
+            return View(ViewAdvertViewModel.FromAdvert(advert));
         }
 
         [Authorize]

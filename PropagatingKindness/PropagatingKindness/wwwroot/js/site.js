@@ -37,5 +37,13 @@ document.addEventListener("DOMContentLoaded", function () {
             dropdownMenu.classList.remove("show");
         }
     });
+
+    let advertThumbnails = document.getElementsByClassName('thumbnail');
+    for (let i = 0; i < advertThumbnails.length; i++) {
+        advertThumbnails[i].addEventListener('click', function () {
+            let imageSrc = advertThumbnails[i].firstElementChild.getAttribute('src');
+            document.getElementById('main-advert-image').src = imageSrc;
+        });
+    }
 });
 

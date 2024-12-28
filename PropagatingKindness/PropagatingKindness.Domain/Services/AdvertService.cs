@@ -94,7 +94,7 @@ namespace PropagatingKindness.Domain.Services
             };
             return advert;
         }
-        private async Task<Advert> GetAdvertById(int advertId)
+        public async Task<Advert> GetAdvertById(int advertId)
         {
             return await _advertRepository.GetById(advertId);
         }
@@ -192,20 +192,11 @@ namespace PropagatingKindness.Domain.Services
             return advert;
         }
 
-        public async Task<Result<Advert>> DisplayAdvert(int userId, int advertId)
+        public async Task<Result<Advert>> DisplayAdvert(int advertId)
         {
-            Result<Advert> advert = await CheckUserOwnsAdvert(userId, advertId);
+            // When the user select an advert, this method will display the advert
 
-            User user = await _userService.GetById(userId);
-
-            if (advert.Success) 
-            { 
-                if (!user.IsAdmin && advert.Content.Status == AdvertStatus.Inactive) 
-                {
-                    advert.Success = false; 
-                }
-            }
-            return advert;
+            return new Result<Advert>(false, string.Empty);
         }
     }
 }

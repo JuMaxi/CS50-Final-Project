@@ -14,5 +14,6 @@ namespace PropagatingKindness.Domain.Interfaces
         public Task<Result<Advert>> ActivateAdvert(int userId, int advertId);
         public Task<Result<Advert>> DonateAdvert(int userId, int advertId);
         public Task<Result<Advert>> PromisseAdvert(int userId, int advertId);
+        public Task<Advert> GetAdvertById(int advertId);
     }
 }

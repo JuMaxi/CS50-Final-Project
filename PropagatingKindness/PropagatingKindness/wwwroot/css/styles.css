@@ -402,3 +402,33 @@ h2 > a {
     border-top: 1px solid #ddd;
     padding: 10px;
 }
+
+/*View advert*/
+.thumbnails-bar {
+    max-width: 120px;
+    overflow-y: auto;
+}
+
+.thumbnail {
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.thumbnail img {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.main-image {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.user-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
