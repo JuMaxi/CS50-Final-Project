@@ -98,7 +98,7 @@ namespace PropagatingKindness.Domain.Services
         {
             return await _advertRepository.GetById(advertId);
         }
-
+        
         public async Task<Result<Advert>> DeactivateAdvert(int userId, int advertId)
         {
             Result<Advert> advert = await CheckUserOwnsAdvert(userId, advertId);

@@ -19,7 +19,7 @@
                 Description = advert.Description,
                 UserPhoto = advert.User.Photo,
                 UserName = advert.User.Name,
-                UserPostCode = advert.User.PostCode,
+                UserPostCode = advert.User.PostCode.Substring(0, advert.User.PostCode.Length - 3),
                 Photos = advert.Photos.Select(p => p.Location).ToList()
             };
         }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PropagatingKindness.Domain.DTO;
 using PropagatingKindness.Domain.Interfaces;
+using PropagatingKindness.Domain.Models;
 using PropagatingKindness.Models.Advert;
 using PropagatingKindness.Services;
 
@@ -13,14 +14,18 @@ namespace PropagatingKindness.Controllers
         private readonly IAdvertService _advertService;
         private readonly IReCaptchaService _reCaptchaService;
         private readonly IPhotosManagerService _photosService;
+        private readonly IUserService _userService;
+
         public AdvertController(
             IAdvertService advertService,
             IReCaptchaService reCaptchaService,
-            IPhotosManagerService photosService) 
+            IPhotosManagerService photosService,
+            IUserService userService) 
         { 
             _advertService = advertService;
             _reCaptchaService = reCaptchaService;
             _photosService = photosService;
+            _userService = userService;
         }
 
         public IActionResult Donation() 
@@ -103,10 +108,31 @@ namespace PropagatingKindness.Controllers
         [HttpGet]
         public async Task<IActionResult> View(int id)
         {
-            // This method retrieves the advert by ID, check if it's not Inactive, and render a view
-
+            List<AdvertStatus> allowedStatus = [AdvertStatus.Available, AdvertStatus.Promissed];
             var advert = await _advertService.GetAdvertById(id);
-            return View(ViewAdvertViewModel.FromAdvert(advert));
+
+            if (allowedStatus.Contains(advert.Status))
+            {
+                return View(ViewAdvertViewModel.FromAdvert(advert));
+            }
+            else
+            {
+                if (HttpContext.User?.Identity?.IsAuthenticated ?? false)
+                {
+                    // User is logged in
+                    var user = await _userService.GetById(GetUserId());
+                    if (advert.User.Id == user.Id || user.IsAdmin)
+                    {
+                        return View(ViewAdvertViewModel.FromAdvert(advert));
+                    }
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    // User is NOT logged in
+                    return RedirectToAction("Index", "Home");
+                }
+            }
         }
 
         [Authorize]
