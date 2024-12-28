@@ -15,6 +15,7 @@ namespace PropagatingKindness.Infra.Mappings
             builder.Property(d => d.Status).IsRequired().HasColumnName("Status");
             builder.HasOne(e => e.From).WithMany().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(f => f.To).WithMany().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(g => g.Chat).WithMany().OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
