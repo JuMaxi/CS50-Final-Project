@@ -270,6 +270,11 @@ namespace PropagatingKindness.Controllers
             // This method retrieves all adverts that are Available or Promissed. There is no need to be logged in
             //      to have this view
 
+            if (page == 0)
+            {
+                page = 1;
+            }
+
             var adverts = await _advertService.GetAllAvailableAndPromissedAdverts(page);
 
             int count = await _advertService.GetCountAvailableAndPromissedAdverts();
