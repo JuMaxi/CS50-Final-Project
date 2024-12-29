@@ -281,5 +281,27 @@ namespace PropagatingKindness.Controllers
 
             return View(AllAvailablePromissedAdvertsViewModel.FromAdverts(adverts.Content, count, page));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Search(int page, string word)
+        {
+            if (string.IsNullOrWhiteSpace(word))
+            {
+                return View("Index", "Home");
+            }
+
+            if (page == 0)
+            {
+                page = 1;
+            }
+
+            var adverts = await _advertService.SearchAvailableAndPromissedAdverts(page, word);
+
+            int count = await _advertService.SearchCountAvailableAndPromissedAdverts(word);
+
+            return View(SearchAvailablePromissedAdvertsViewModel.FromAdverts(adverts.Content, count, page, word));
+            
+        }
+
     }
 }

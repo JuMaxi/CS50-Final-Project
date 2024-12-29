@@ -48,12 +48,24 @@ namespace PropagatingKindness.Infra.Repository
                 .ToListAsync();
         }
 
-        public async Task<List<Advert>> GetAllAvailableAndPromissedAdverts(int page)
+        public async Task<List<Advert>> GetAllAvailableAndPromissedAdverts(int skip)
         {
             return await _dbContext.Adverts.Include(p => p.Photos)
                 .Include(u => u.User)
                 .Where(a => a.Status == AdvertStatus.Available || a.Status == AdvertStatus.Promissed)
-                .Skip(page)
+                .Skip(skip)
+                .Take(16)
+                .OrderByDescending(d => d.CreatedDate)
+                .ToListAsync();
+        }
+
+        public async Task<List<Advert>> SearchAvailableAndPromissedAdverts(int skip, string word)
+        {
+            return await _dbContext.Adverts.Include(p => p.Photos)
+                .Include(u => u.User)
+                .Where(a => a.Status == AdvertStatus.Available || a.Status == AdvertStatus.Promissed)
+                .Where(b => b.Name.Contains(word))
+                .Skip(skip)
                 .Take(16)
                 .OrderByDescending(d => d.CreatedDate)
                 .ToListAsync();
@@ -63,6 +75,14 @@ namespace PropagatingKindness.Infra.Repository
         {
             return await _dbContext.Adverts
                 .Where(a => a.Status == AdvertStatus.Available || a.Status == AdvertStatus.Promissed)
+                .CountAsync();
+        }
+
+        public async Task<int> SearchCountAvailableAndPromissedAdverts(string word)
+        {
+            return await _dbContext.Adverts
+                .Where(a => a.Status == AdvertStatus.Available || a.Status == AdvertStatus.Promissed)
+                .Where(b => b.Name.Contains(word))
                 .CountAsync();
         }
     }

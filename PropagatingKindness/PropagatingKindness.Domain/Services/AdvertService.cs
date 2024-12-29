@@ -68,6 +68,21 @@ namespace PropagatingKindness.Domain.Services
         {
             return await _advertRepository.GetCountAvailableAndPromissedAdverts();
         }
+
+        public async Task<Result<List<Advert>>> SearchAvailableAndPromissedAdverts(int page, string word)
+        {
+            int skip = CalculateAdvertToSkip(page);
+
+            List<Advert> adverts = await _advertRepository.SearchAvailableAndPromissedAdverts(skip, word);
+
+            return new Result<List<Advert>>(adverts);
+        }
+
+        public async Task<int> SearchCountAvailableAndPromissedAdverts(string word)
+        {
+            return await _advertRepository.SearchCountAvailableAndPromissedAdverts(word);
+        }
+
         public async Task<List<Advert>> GetAllPendingAdverts()
         {
             return await _advertRepository.GetAllPendingAdverts();
