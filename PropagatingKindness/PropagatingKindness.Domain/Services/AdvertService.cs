@@ -64,6 +64,10 @@ namespace PropagatingKindness.Domain.Services
             return new Result<List<Advert>> (adverts);
         }
 
+        public async Task<int> GetCountAvailableAndPromissedAdverts()
+        {
+            return await _advertRepository.GetCountAvailableAndPromissedAdverts();
+        }
         public async Task<List<Advert>> GetAllPendingAdverts()
         {
             return await _advertRepository.GetAllPendingAdverts();

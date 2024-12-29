@@ -21,8 +21,9 @@ namespace PropagatingKindness.Models.Account
         [EmailAddress(ErrorMessage = "Email is not valid.")]
         public string Email { get; set; }
 
+        [RegularExpression(@"^[\w!@#$%^&*()_\-+=[\]{}|\\:;""'<>,.?/~`]+$", ErrorMessage="Invalid chars in the password.")]
         [Required(ErrorMessage = "Password is required.")]
-        [StringLength(100, ErrorMessage = "Password can't exceed 100 characters.")]
+        [StringLength(100, ErrorMessage = "Password must be between 8 and 100 chars.", MinimumLength = 8)]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
@@ -30,7 +31,7 @@ namespace PropagatingKindness.Models.Account
         public DateOnly Birthday { get; set; }
 
         [Required(ErrorMessage = "Post Code is required.")]
-        [StringLength(7, ErrorMessage = "Post Code to the UK exceed 7 characters.")]
+        [StringLength(7, ErrorMessage = "Post Code to the UK must be between 5 and 7 chars.", MinimumLength = 5)]
         public string PostCode { get; set; }
 
         [Required(ErrorMessage = "Please accept the user agreements.")]

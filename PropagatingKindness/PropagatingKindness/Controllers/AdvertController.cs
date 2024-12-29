@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 using PropagatingKindness.Domain.DTO;
 using PropagatingKindness.Domain.Interfaces;
 using PropagatingKindness.Domain.Models;
@@ -271,7 +272,9 @@ namespace PropagatingKindness.Controllers
 
             var adverts = await _advertService.GetAllAvailableAndPromissedAdverts(page);
 
-            return View(AllAvailablePromissedAdvertsViewModel.FromAdverts(adverts.Content));
+            int count = await _advertService.GetCountAvailableAndPromissedAdverts();
+
+            return View(AllAvailablePromissedAdvertsViewModel.FromAdverts(adverts.Content, count, page));
         }
     }
 }

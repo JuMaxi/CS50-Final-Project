@@ -23,20 +23,22 @@ for (let i = 0; i < elements.length; i++)
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    const dropdownToggle = document.getElementById("dropdownToggle");
-    const dropdownMenu = document.querySelector("#userDropdown .user-dropdown-menu");
+    let dropdownToggle = document.getElementById("dropdownToggle");
+    let dropdownMenu = document.querySelector("#userDropdown .user-dropdown-menu");
 
-    dropdownToggle.addEventListener("click", function (e) {
-        e.preventDefault();
-        dropdownMenu.classList.toggle("show");
-    });
+    if (dropdownToggle != null) {
+        dropdownToggle.addEventListener("click", function (e) {
+            e.preventDefault();
+            dropdownMenu.classList.toggle("show");
+        });
 
-    // Close the dropdown if clicked outside
-    document.addEventListener("click", function (e) {
-        if (!dropdownToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
-            dropdownMenu.classList.remove("show");
-        }
-    });
+        // Close the dropdown if clicked outside
+        document.addEventListener("click", function (e) {
+            if (!dropdownToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                dropdownMenu.classList.remove("show");
+            }
+        });
+    }
 
     let advertThumbnails = document.getElementsByClassName('thumbnail');
     for (let i = 0; i < advertThumbnails.length; i++) {

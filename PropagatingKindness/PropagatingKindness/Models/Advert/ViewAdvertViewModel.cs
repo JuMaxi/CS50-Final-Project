@@ -9,6 +9,7 @@
         public string UserName { get; set; }
         public string UserPostCode { get; set; }
         public List<string> Photos { get; set; }
+        public int Status { get; set; }
 
         public static ViewAdvertViewModel FromAdvert(Domain.Models.Advert advert)
         {
@@ -20,7 +21,8 @@
                 UserPhoto = advert.User.Photo,
                 UserName = advert.User.Name,
                 UserPostCode = advert.User.PostCode.Substring(0, advert.User.PostCode.Length - 3),
-                Photos = advert.Photos.Select(p => p.Location).ToList()
+                Photos = advert.Photos.Select(p => p.Location).ToList(),
+                Status = (int)advert.Status
             };
         }
     }

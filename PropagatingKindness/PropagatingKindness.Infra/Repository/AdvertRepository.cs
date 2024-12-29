@@ -55,7 +55,15 @@ namespace PropagatingKindness.Infra.Repository
                 .Where(a => a.Status == AdvertStatus.Available || a.Status == AdvertStatus.Promissed)
                 .Skip(page)
                 .Take(16)
+                .OrderByDescending(d => d.CreatedDate)
                 .ToListAsync();
+        }
+
+        public async Task<int> GetCountAvailableAndPromissedAdverts()
+        {
+            return await _dbContext.Adverts
+                .Where(a => a.Status == AdvertStatus.Available || a.Status == AdvertStatus.Promissed)
+                .CountAsync();
         }
     }
 }

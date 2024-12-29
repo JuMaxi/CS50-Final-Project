@@ -16,8 +16,14 @@
         <!-- Main Image and Advert Details -->
         <div class="col-md-10 d-flex">
             <!-- Main Image -->
-            <div class="col-md-6 me-3">
-                <img src="@Model.Photos[0]" alt="Main Advert Image" class="main-image" id="main-advert-image"> 
+            <div class="col-md-6 me-3 main-image-container">
+                <img src="@Model.Photos[0]" alt="Main Advert Image" class="main-image" id="main-advert-image">
+                @if (Model.Status == 2)
+                {
+                    <div class="advert-card-ribbon bg-purple bg-gradient" style="top: 15vw">
+                        <span>Promissed</span>
+                    </div>
+                }
             </div>
 
             <!-- Advert Details -->

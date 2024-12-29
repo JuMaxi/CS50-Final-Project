@@ -10,5 +10,6 @@ namespace PropagatingKindness.Domain.Interfaces
         public Task<List<Advert>> GetAllUserAdverts(int userId);
         public Task<List<Advert>> GetAllPendingAdverts();
         public Task<List<Advert>> GetAllAvailableAndPromissedAdverts(int page);
+        public Task<int> GetCountAvailableAndPromissedAdverts();
     }
 }

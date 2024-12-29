@@ -1,14 +1,20 @@
-﻿namespace PropagatingKindness.Models.Advert
+﻿using System.Numerics;
+
+namespace PropagatingKindness.Models.Advert
 {
     public class AllAvailablePromissedAdvertsViewModel
     {
         public List<AllViewModel> Adverts { get; set; } = [];
+        public int TotalAdverts { get; set; }
+        public int CurrentPage { get; set; }
 
-        public static AllAvailablePromissedAdvertsViewModel FromAdverts(List<Domain.Models.Advert> adverts)
+        public static AllAvailablePromissedAdvertsViewModel FromAdverts(List<Domain.Models.Advert> adverts, int total, int page)
         {
             return new AllAvailablePromissedAdvertsViewModel()
             {
                 Adverts = adverts.Select(adv => AllViewModel.FromAdvert(adv)).ToList(),
+                TotalAdverts = total,
+                CurrentPage = page
             };
         }
     }
