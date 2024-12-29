@@ -17,9 +17,11 @@ public class ChatController : Controller
     }
 
     [Authorize]
-    public IActionResult MyConversations()
+    public async Task<IActionResult> MyConversations()
     {
-        return View();
+        int userId = GetUserId();
+        var chats = await _chatService.GetChats(userId);
+        return View(MyConversationsViewModel.FromChats(chats, userId));
     }
 
     [Authorize]

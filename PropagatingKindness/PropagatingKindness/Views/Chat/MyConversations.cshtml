@@ -1,12 +1,18 @@
-﻿<div class="row chat-container mt-5">
+﻿@using PropagatingKindness.Models.Chat
+@model MyConversationsViewModel
+
+<div class="row chat-container mt-5">
     <!-- Left Sidebar: Chat Sessions -->
     <div class="col-md-4 chat-sessions bg-light">
         <h5 class="p-3 border-bottom">Chats</h5>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item">Chat with Alice</li>
-            <li class="list-group-item">Chat with Bob</li>
+            @foreach (var conversation in Model.Conversations)
+            { 
+                <li class="list-group-item chat-conversation" chat-id="@conversation.Id">Chat with @conversation.UserName</li>
+            }
+            @* <li class="list-group-item">Chat with Bob</li>
             <li class="list-group-item">Chat with Charlie</li>
-            <li class="list-group-item">Chat with Dave</li>
+            <li class="list-group-item">Chat with Dave</li> *@
         </ul>
     </div>
     <!-- Right Panel: Chat Window -->

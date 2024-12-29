@@ -39,26 +39,29 @@ namespace PropagatingKindness.Domain.Services
             return await _advertRepository.GetAllUserAdverts(userId);
         }
 
-        public async Task<List<Advert>> GetAllAdverts(int limit, int page)
+        private int CalculateAdvertToSkip(int page)
         {
             int skip = 0;
 
-            if (limit < 0 || limit > 1000)
-            {
-                limit = 10;
-            }
-
-            if (page < 0)
+            if (page <= 0)
             {
                 page = 1;
             }
 
             if (page > 1)
             {
-                skip = limit * (page - 1);
+                skip = 16 * (page - 1);
             }
 
-            return await _advertRepository.GetAllToSearch(skip, limit);
+            return skip;
+        }
+
+        public async Task<Result<List<Advert>>> GetAllAvailableAndPromissedAdverts(int page)
+        {
+            int skip = CalculateAdvertToSkip(page);
+            List<Advert> adverts = await _advertRepository.GetAllAvailableAndPromissedAdverts(skip);
+
+            return new Result<List<Advert>> (adverts);
         }
 
         public async Task<List<Advert>> GetAllPendingAdverts()

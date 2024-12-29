@@ -1,0 +1,45 @@
+﻿@using Microsoft.Extensions.Options
+@using PropagatingKindness.Configuration
+@model PropagatingKindness.Models.Advert.AllAvailablePromissedAdvertsViewModel
+
+<div class="container mt-5">
+    <h1 class="text-center">My Adverts</h1>
+    <div class="row mt-4">
+        @if (Model.Adverts.Any())
+        {
+            @foreach (var advert in Model.Adverts)
+            {
+                <!-- Advert Card -->
+                <div class="col-md-3 mb-4">
+                    <div class="cardAdvert">
+                        <div class="advert-card-image-container position-relative ratio ratio-1x1">
+                            <a asp-action="View" asp-controller="Advert" asp-route-id="@advert.Id">
+                                <img src="@advert.Photo" class="img-fluid" alt="Advert Photo" id="imgAdvert">
+                            </a>
+
+                            @if (advert.Status == 2)
+                            {
+                                <div class="advert-card-ribbon bg-purple bg-gradient">
+                                    <span>Promissed</span>
+                                </div>
+                            }
+                        </div>
+                        <div class="card-body-advert text-center">
+                            <h5 class="card-title-advert">@advert.Name</h5>
+                            <p>@advert.PostCode</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else{
+            <div class="card-body-advert text-center">
+                <h2 style="color:crimson">Sorry, there are no available or promissed items.</h2>
+            </div>
+        }
+        
+    </div>
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+</div>

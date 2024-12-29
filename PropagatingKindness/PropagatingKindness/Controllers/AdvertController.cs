@@ -262,5 +262,16 @@ namespace PropagatingKindness.Controllers
             var viewModel = PendingAdvertsViewModel.FromAdverts(pending);
             return View(viewModel);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> All(int page)
+        {
+            // This method retrieves all adverts that are Available or Promissed. There is no need to be logged in
+            //      to have this view
+
+            var adverts = await _advertService.GetAllAvailableAndPromissedAdverts(page);
+
+            return View(AllAvailablePromissedAdvertsViewModel.FromAdverts(adverts.Content));
+        }
     }
 }

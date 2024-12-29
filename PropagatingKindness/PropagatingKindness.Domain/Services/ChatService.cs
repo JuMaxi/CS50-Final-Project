@@ -66,6 +66,11 @@ public class ChatService : IChatService
         return new Result<Chat>(chat);
     }
 
+    public async Task<List<Chat>> GetChats(int userId)
+    {
+        return await _chatRepository.GetChats(userId);
+    }
+
     public async Task<Result> SendMessage(int userId, int chatId, string message)
     {
         if (string.IsNullOrWhiteSpace(message))

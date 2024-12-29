@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using PropagatingKindness.Domain.Interfaces;
 using PropagatingKindness.Domain.Models;
 using PropagatingKindness.Infra.Db;
@@ -29,10 +30,6 @@ namespace PropagatingKindness.Infra.Repository
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<List<Advert>> GetAllToSearch(int skip, int limit)
-        {
-            return await _dbContext.Adverts.Skip(skip).Take(limit).ToListAsync();
-        }
         public async Task Update(Advert advert)
         {
             _dbContext.Adverts.Update(advert);
@@ -48,6 +45,16 @@ namespace PropagatingKindness.Infra.Repository
         {
             return await _dbContext.Adverts.Include(a => a.Photos)
                 .Where(x => x.Status == AdvertStatus.UnderReview)
+                .ToListAsync();
+        }
+
+        public async Task<List<Advert>> GetAllAvailableAndPromissedAdverts(int page)
+        {
+            return await _dbContext.Adverts.Include(p => p.Photos)
+                .Include(u => u.User)
+                .Where(a => a.Status == AdvertStatus.Available || a.Status == AdvertStatus.Promissed)
+                .Skip(page)
+                .Take(16)
                 .ToListAsync();
         }
     }
