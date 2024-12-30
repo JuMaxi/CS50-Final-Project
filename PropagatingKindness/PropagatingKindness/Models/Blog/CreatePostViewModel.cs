@@ -13,7 +13,8 @@ namespace PropagatingKindness.Models.Blog
         public string Title { get; set; }
 
         [Required(ErrorMessage = "Photo is required.")]
-        public IFormFile Photo { get; set; }
+        public IFormFile ThumbnailPhoto { get; set; }
+        public IFormFile CoverPhoto { get; set; }
 
         [Required(ErrorMessage = "ShortDescription is required.")]
         public string ShortDescription { get; set; }
@@ -24,13 +25,14 @@ namespace PropagatingKindness.Models.Blog
         [Required(ErrorMessage = "Content is required.")]
         public string Content { get; set; }
 
-        public BlogDTO ConvertToDTO(string photoURL)
+        public BlogDTO ConvertToDTO(string photoURLT, string photoURLC)
         {
             return new BlogDTO()
             {
                 Id = Id,
                 Title = Title,
-                Photo = photoURL,
+                ThumbnailPhoto = photoURLT,
+                CoverPhoto = photoURLC,
                 ShortDescription = ShortDescription,
                 Tags = Tags.Split(",").ToList(),
                 Content = Content

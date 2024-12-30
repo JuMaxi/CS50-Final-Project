@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 using PropagatingKindness.Domain.Interfaces;
 using PropagatingKindness.Domain.Services;
 using PropagatingKindness.Models.Blog;
@@ -59,8 +60,10 @@ namespace PropagatingKindness.Controllers
                     return View(postView);
                 }
 
-                var imagePath = await _photosService.ResizeAndUpload(postView.Photo, maxWidth: 500, maxHeight: 500, blobContainer: "blogs");
-                var dto = postView.ConvertToDTO(imagePath);
+                var imagePath = await _photosService.ResizeAndUpload(postView.ThumbnailPhoto, maxWidth: 500, maxHeight: 500, blobContainer: "blogs");
+                var imagePathCover = await _photosService.ResizeAndUpload(postView.CoverPhoto, maxWidth: 1500, maxHeight: 500, blobContainer: "blogs");
+
+                var dto = postView.ConvertToDTO(imagePath, imagePathCover);
 
                 var result = await _blogService.CreatePost(dto, GetUserId());
 
@@ -69,5 +72,13 @@ namespace PropagatingKindness.Controllers
             }
             return RedirectToAction("Home", "Index");
         }
+
+        [HttpGet]
+        public IActionResult ViewPost(int id)
+        {
+            return View();
+        }
+       
+       
     }
 }

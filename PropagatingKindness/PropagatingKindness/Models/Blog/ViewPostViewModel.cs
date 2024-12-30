@@ -6,7 +6,7 @@ namespace PropagatingKindness.Models.Blog
     {
         public int PostId { get; set; }
         public string Title { get; set; }
-        public string Photo { get; set; }
+        public string CoverPhoto { get; set; }
         public DateTime PublicationDate { get; set; }
         public List<string> Tags { get; set; } = [];
         public string Content { get; set; }
@@ -22,7 +22,7 @@ namespace PropagatingKindness.Models.Blog
             {
                 PostId = blogPost.Id,
                 Title = blogPost.Title,
-                Photo = blogPost.Photo,
+                CoverPhoto = blogPost.CoverPhoto,
                 PublicationDate = blogPost.Date,
                 Tags = t,
                 Content = blogPost.Content.Content

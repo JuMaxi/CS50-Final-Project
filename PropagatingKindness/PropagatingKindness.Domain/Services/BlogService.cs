@@ -38,7 +38,8 @@ namespace PropagatingKindness.Domain.Services
 
             post.Date = DateTime.Now;
             post.Title = postDTO.Title;
-            post.Photo = postDTO.Photo;
+            post.ThumbnailPhoto = postDTO.ThumbnailPhoto;
+            post.CoverPhoto = postDTO.CoverPhoto;
             post.ShortDescription = postDTO.ShortDescription;
 
             BlogPostContent content = new()

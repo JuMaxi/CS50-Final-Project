@@ -32,7 +32,7 @@ namespace PropagatingKindness.Models.Blog
                 Title = blogPost.Title,
                 PublicationDate = blogPost.Date,
                 ShortDescription = blogPost.ShortDescription,
-                Photo = blogPost.Photo,
+                Photo = blogPost.ThumbnailPhoto,
             };
         }
     }

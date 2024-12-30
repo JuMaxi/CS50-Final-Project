@@ -12,7 +12,9 @@ namespace PropagatingKindness.Domain.DTO
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public string Photo { get; set; }
+        public string ThumbnailPhoto { get; set; }
+        public string CoverPhoto { get; set; }
+
         public string ShortDescription { get; set; }
         public DateTime Date { get; set; }
         public List<string> Tags { get; set; }
@@ -30,7 +32,7 @@ namespace PropagatingKindness.Domain.DTO
             {
                 Id = post.Id,
                 Title = post.Title,
-                Photo = post.Photo,
+                ThumbnailPhoto = post.ThumbnailPhoto,
                 ShortDescription = post.ShortDescription,
                 Date = post.Date,
                 Content = post.Content.Content,

@@ -1,3 +1,26 @@
 ﻿@using Microsoft.Extensions.Options
 @using PropagatingKindness.Configuration
 @model PropagatingKindness.Models.Blog.ViewPostViewModel
+
+<div class="container my-5">
+    <!-- Blog Post -->
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10 col-sm-12">
+            <!-- Title -->
+            <h1 class="mb-3 text-center">@Model.Title</h1>
+
+            <!-- Cover Image -->
+            <div class="mb-3 text-center">
+                <img src="https://via.placeholder.com/800x400" alt="Cover Image" class="img-fluid rounded">
+            </div>
+
+            <!-- Published Date -->
+            <div class="mb-3 text-muted text-center">
+                <small>Published on: @Model.PublicationDate</small>
+            </div>
+
+            <!-- Content -->
+            <div style="text-align:justify;">@Model.Content</div>
+        </div>
+    </div>
+</div>
