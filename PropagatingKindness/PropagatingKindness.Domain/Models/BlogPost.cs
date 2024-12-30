@@ -7,7 +7,14 @@
         public string Photo {  get; set; }
         public string ShortDescription { get; set; }
         public DateTime Date { get; set; }
-        public List<Tag> Tags { get; set; }
+        public List<Tag> Tags { get; set; } = [];
         public BlogPostContent Content {  get; set; }
+
+        public void AddTag(string tag)
+        {
+            Tag t = new();
+            t.Text = tag;
+            Tags.Add(t);
+        }
     }
 }

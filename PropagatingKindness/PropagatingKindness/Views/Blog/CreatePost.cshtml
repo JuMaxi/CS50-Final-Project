@@ -1,0 +1,57 @@
+﻿@using Microsoft.Extensions.Options
+@using PropagatingKindness.Configuration
+@model PropagatingKindness.Models.Blog.CreatePostViewModel
+@inject IOptions<ReCaptchaConfiguration> ReCaptcha
+
+<div class="container my-5">
+    @if (!string.IsNullOrEmpty(Model?.ErrorMessage))
+    {
+        <h2 style="color:crimson"> ⚠️ @Model.ErrorMessage </h2>
+    }
+    <h1 class="mb-4">Create Blog Content</h1>
+    <form asp-action="CreatePost" asp-controller="Blog" method="post" enctype="multipart/form-data">
+        <!-- Title -->
+        <div class="mb-3">
+            <label asp-for="Title" for="title" class="form-label">Title</label>
+            <input asp-for="Title" type="text" name="Title" class="form-control" id="Title" placeholder="Enter blog title">
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <!-- Photo -->
+        <div class="mb-3">
+            <label asp-for="Photo" for="photo" class="form-label">Photo</label>
+            <input asp-for="Photo" type="file" name="Photo" class="form-control" id="Photo">
+            <span asp-validation-for="Photo" class="text-danger"></span>
+        </div>
+
+        <!-- Short Description -->
+        <div class="mb-3">
+            <label asp-for="ShortDescription" for="shortDescription" class="form-label">Short Description</label>
+            <textarea asp-for="ShortDescription" name="ShortDescription" class="form-control" id="ShortDescription" rows="2" placeholder="Write a brief description"></textarea>
+            <span asp-validation-for="ShortDescription" class="text-danger"></span>
+        </div>
+
+        <!-- Tags -->
+        <div class="mb-3">
+            <label asp-for="Tags" for="tags" class="form-label">Tags</label>
+            <textarea asp-for="Tags" name="Tags" class="form-control" id="Tags" rows="1" placeholder="Type tags separated by commas"></textarea>
+            <div class="form-text">Separate tags with commas or semicolons (e.g., "tech, lifestyle, health").</div>
+            <span asp-validation-for="Tags" class="text-danger"></span>
+        </div>
+       
+        <!-- Content -->
+        <div class="mb-3">
+            <label asp-for="Content" for="content" class="form-label">Content</label>
+            <textarea asp-for="Content" name="Content" class="form-control" id="Content" rows="10" placeholder="Write your blog content"></textarea>
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
+
+        <!--reCaptcha-->
+        <div class="col-12 mt-2">
+            <div class="g-recaptcha" data-sitekey="@ReCaptcha.Value.SiteKey"></div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary mt-3">Create Blog Post</button>
+    </form>
+</div>
