@@ -31,9 +31,10 @@ namespace PropagatingKindness.Controllers
         }
 
         [HttpGet]
-        public IActionResult All()
+        public async Task<IActionResult> All()
         {
-            return View();
+            var posts = await _blogService.GetAllPosts();
+            return View(AllPostsViewModel.FromBlogPosts(posts));
         }
 
         [HttpGet]
