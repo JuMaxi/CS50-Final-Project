@@ -12,7 +12,7 @@ public class PlantsDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Advert> Adverts { get; set; }
 
-    public DbSet<Advert> Blogs { get; set; }
+    public DbSet<BlogPost> Blogs { get; set; }
 
     public DbSet<GardeningHelp> GardeningHelpRequests { get; set; }
 

@@ -52,5 +52,15 @@ namespace PropagatingKindness.Domain.Services
             await _blogRepository.Insert(post);
             return new Result(true, string.Empty);
         }
+
+        public async Task<BlogPost> GetPostById(int id)
+        {
+            return await _blogRepository.GetById(id);
+        }
+
+        public async Task<List<BlogPost>> GetAllPosts()
+        {
+            return await _blogRepository.GetAllPosts();
+        }
     }
 }

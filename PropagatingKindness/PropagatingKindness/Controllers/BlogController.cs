@@ -30,7 +30,8 @@ namespace PropagatingKindness.Controllers
             return Convert.ToInt32(HttpContext.User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value);
         }
 
-        public IActionResult ListPosts()
+        [HttpGet]
+        public IActionResult All()
         {
             return View();
         }
@@ -74,9 +75,10 @@ namespace PropagatingKindness.Controllers
         }
 
         [HttpGet]
-        public IActionResult ViewPost(int id)
+        public async Task<IActionResult> ViewPost(int id)
         {
-            return View();
+            var post = await _blogService.GetPostById(id);
+            return View(ViewPostViewModel.FromBlogPost(post));
         }
     }
 }

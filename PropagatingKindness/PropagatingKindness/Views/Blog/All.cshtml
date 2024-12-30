@@ -1,0 +1,26 @@
+﻿@using Microsoft.Extensions.Options
+@using PropagatingKindness.Configuration
+@model PropagatingKindness.Models.Blog.AllPostsViewModel
+<div class="container my-5">
+    <!-- Blog Post Item -->
+    <div class="row mb-4">
+        @foreach (var post in Model.ListPosts)
+        {
+            <div class="col-md-3 mb-4">
+                <div class="advert-card-image-container position-relative ratio ratio-1x1 float-end" style="width:150px">
+                    <a asp-action="ViewPost" asp-controller="Blog" asp-route-id="@post.Id">
+                        <img src="@post.ThumbnailPhoto" alt="Blog Image" class="img-fluid rounded float-end">
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-9 mb-4">
+                <h3>@post.Title</h3>
+                <p class="text-muted">Published on: <span>@post.PublicationDate</span></p>
+                <p class="text-secondary">@post.ShortDescription</p>
+            </div>
+        }
+    </div>
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+</div>
