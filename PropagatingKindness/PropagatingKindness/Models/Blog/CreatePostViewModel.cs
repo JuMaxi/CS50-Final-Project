@@ -12,8 +12,10 @@ namespace PropagatingKindness.Models.Blog
         [Required(ErrorMessage = "Title is required.")]
         public string Title { get; set; }
 
-        [Required(ErrorMessage = "Photo is required.")]
+        [Required(ErrorMessage = "Thumbnail photo is required.")]
         public IFormFile ThumbnailPhoto { get; set; }
+
+        [Required(ErrorMessage = "Cover photo is required.")]
         public IFormFile CoverPhoto { get; set; }
 
         [Required(ErrorMessage = "ShortDescription is required.")]

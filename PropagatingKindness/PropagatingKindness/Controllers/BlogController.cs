@@ -78,7 +78,5 @@ namespace PropagatingKindness.Controllers
         {
             return View();
         }
-       
-       
     }
 }

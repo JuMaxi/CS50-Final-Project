@@ -8,7 +8,7 @@
     {
         <h2 style="color:crimson"> ⚠️ @Model.ErrorMessage </h2>
     }
-    <h1 class="mb-4">Create Blog Content</h1>
+    <h1 class="mb-4 text-center">Create Blog Content</h1>
     <form asp-action="CreatePost" asp-controller="Blog" method="post" enctype="multipart/form-data">
         <!-- Title -->
         <div class="mb-3">
@@ -17,11 +17,17 @@
             <span asp-validation-for="Title" class="text-danger"></span>
         </div>
 
-        <!-- Photo -->
+        <!-- Photos -->
         <div class="mb-3">
-            <label asp-for="ThumbnailPhoto" for="photo" class="form-label">Photo</label>
-            <input asp-for="ThumbnailPhoto" type="file" name="Photo" class="form-control" id="Photo">
+            <label asp-for="ThumbnailPhoto" for="Photo" class="form-label">Thumbnail Photo</label>
+            <input asp-for="ThumbnailPhoto" type="file" name="ThumbnailPhoto" class="form-control" id="Photo">
             <span asp-validation-for="ThumbnailPhoto" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="CoverPhoto" for="CoverPhoto" class="form-label">Cover Photo</label>
+            <input asp-for="CoverPhoto" type="file" name="CoverPhoto" class="form-control" id="CoverPhoto">
+            <span asp-validation-for="CoverPhoto" class="text-danger"></span>
         </div>
 
         <!-- Short Description -->
