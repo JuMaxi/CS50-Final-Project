@@ -2,6 +2,13 @@
 @model MyConversationsViewModel
 
 <div class="row chat-container mt-5">
+    @if (!Model.Conversations.Any())
+    {
+        <h2>You don't have any conversation yet</h2>
+        <h5>Click on "Send Message" on an advert to start chatting with someone.</h5>
+    }
+    else
+    {
     <!-- Left Sidebar: Chat Sessions -->
     <div class="col-md-4 chat-sessions bg-light">
         <h5 class="p-3 border-bottom">Chats</h5>
@@ -45,10 +52,11 @@
         </div>
         <!-- Input Area -->
         <div class="chat-input d-flex">
-            <input type="text" class="form-control me-2" placeholder="Type a message..." id="message-input">
+            <input type="text" autocomplete="off" class="form-control me-2" placeholder="Type a message..." id="message-input">
             <button class="btn btn-primary" onclick="sendMessage" id="button-send">Send</button>
         </div>
     </div>
+    }
 </div>
 
 <script src="/js/chat.js"></script>

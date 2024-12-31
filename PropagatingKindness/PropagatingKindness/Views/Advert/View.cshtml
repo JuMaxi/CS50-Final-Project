@@ -37,7 +37,7 @@
                         <small class="text-muted">Postcode @Model.UserPostCode</small>
                     </div>
                 </div>
-                <button class="btn btn-primary">Send Message</button>
+                <a asp-action="WithAdvert" asp-controller="Chat" asp-route-id="@Model.AdvertId" class="btn btn-primary">Send Message</a>
             </div>
         </div>
     </div>

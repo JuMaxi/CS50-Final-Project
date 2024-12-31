@@ -30,12 +30,12 @@ function createMessageBalloon(msg) {
 
     const container = document.createElement('div');
     container.innerHTML = html;
-    return container.firstChild;
+    return container.firstElementChild;
 }
 
 function renderHeader(response) {
-    const html = `<a href="/Advert/View/${response.advert.advertId}"><img src="${response.advert.photos[0]}" alt="Header Image">
-            <h5 class="mb-0">${response.advert.Name}</h5></a>`;
+    const html = `<a href="/Advert/View/${response.advert.advertId}" class="text-reset"><img src="${response.advert.photos[0]}" alt="Header Image">
+            <span class="mb-0 fs-4 align-middle">${response.advert.name}</span></a>`;
     document.getElementById("chat-header").innerHTML = html;
 }
 
@@ -64,6 +64,7 @@ function enableSending() {
 
 function sendMessage() {
     disableSending();
+    var input = document.getElementById('message-input');
 
     return new Promise((resolve, reject) => {
         fetch(`/Chat/SendMessage/${lastChat}`, {
@@ -99,7 +100,8 @@ function getMessages(id) {
         fetchTimeout = null;
     }
 
-    if (id != lastChat) {
+    let newChat = id != lastChat;
+    if (newChat) {
         disableSending();
         clearHeader();
         clearMessages();
@@ -115,7 +117,8 @@ function getMessages(id) {
             return response.json();
         })
         .then(data => {
-            renderHeader(data);
+            if (newChat)
+                renderHeader(data);
             const messagesDiv = document.getElementById("chat-messages");
 
             if (data.messages && Array.isArray(data.messages) && data.messages.length > 0) {
@@ -127,18 +130,25 @@ function getMessages(id) {
                 });
 
                 // Add new messages to the chat-messages div
-                newMessages.forEach(message => {
-                    const messageElement = createMessageBalloon(message);
+                for (let i = 0; i < newMessages.length; i++) {
+                    let messageElement = createMessageBalloon(newMessages[i]);
                     messagesDiv.appendChild(messageElement);
-                });
+                }
+                //newMessages.forEach(message => {
+                //    const messageElement = createMessageBalloon(message);
+                //    messagesDiv.appendChild(messageElement);
+                //});
 
                 // Update the most recent DateTime
                 if (newMessages.length > 0) {
-                    mostRecentDateTime = newMessages[newMessages.length - 1].DateTime;
+                    mostRecentDateTime = newMessages[newMessages.length - 1].dateTime;
                 }
             } else { 
                 messagesDiv.innerHTML = '<h3>No messages yet</h3><h5>Why don\'t you break the ice?</h5>';
             }
+
+            if (newChat)
+                enableSending();
         })
         .catch(error => {
             console.error("Error fetching messages:", error);
