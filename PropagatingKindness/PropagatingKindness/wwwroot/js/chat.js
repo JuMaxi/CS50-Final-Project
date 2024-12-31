@@ -62,6 +62,14 @@ function enableSending() {
     button.removeAttribute("disabled", "disabled");
 }
 
+function addMessage(element) {
+    const messagesDiv = document.getElementById("chat-messages");
+    let h3nomsg = document.getElementById('chat-no-messages');
+    if (h3nomsg !== null && h3nomsg !== undefined)
+        messagesDiv.innerHTML = '';
+    messagesDiv.appendChild(element);
+}
+
 function sendMessage() {
     disableSending();
     var input = document.getElementById('message-input');
@@ -82,7 +90,9 @@ function sendMessage() {
     })
     .then(data => {
         const messageElement = createMessageBalloon(data);
-        document.getElementById("chat-messages").appendChild(messageElement);
+        mostRecentDateTime = new Date();
+            //document.getElementById("chat-messages").appendChild(messageElement);
+        addMessage(messageElement);
         input.value = '';
         enableSending();
     })
@@ -133,7 +143,8 @@ function getMessages(id) {
                 // Add new messages to the chat-messages div
                 for (let i = 0; i < newMessages.length; i++) {
                     let messageElement = createMessageBalloon(newMessages[i]);
-                    messagesDiv.appendChild(messageElement);
+                    //messagesDiv.appendChild(messageElement);
+                    addMessage(messageElement);
                 }
                 //newMessages.forEach(message => {
                 //    const messageElement = createMessageBalloon(message);
@@ -145,7 +156,7 @@ function getMessages(id) {
                     mostRecentDateTime = newMessages[newMessages.length - 1].dateTime;
                 }
             } else { 
-                messagesDiv.innerHTML = '<h3>No messages yet</h3><h5>Why don\'t you break the ice?</h5>';
+                messagesDiv.innerHTML = '<h3 id="chat-no-messages">No messages yet</h3><h5>Why don\'t you break the ice?</h5>';
             }
 
             if (newChat)
