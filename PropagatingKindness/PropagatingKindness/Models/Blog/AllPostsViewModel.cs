@@ -5,12 +5,16 @@ namespace PropagatingKindness.Models.Blog
     public class AllPostsViewModel
     {
         public List<Post> ListPosts { get; set; } = [];
+        public int TotalPosts { get; set; }
+        public int CurrentPage { get; set; }
 
-        public static AllPostsViewModel FromBlogPosts(List<BlogPost> posts)
+        public static AllPostsViewModel FromBlogPosts(List<BlogPost> posts, int total, int page)
         {
             return new AllPostsViewModel()
             {
                 ListPosts = posts.Select(p => Post.FromBlogPost(p)).ToList(),
+                TotalPosts = total,
+                CurrentPage = page
             };
         }
         

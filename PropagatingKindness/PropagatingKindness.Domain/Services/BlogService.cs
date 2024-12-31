@@ -58,9 +58,43 @@ namespace PropagatingKindness.Domain.Services
             return await _blogRepository.GetById(id);
         }
 
-        public async Task<List<BlogPost>> GetAllPosts()
+        private int CalculateAdvertToSkip(int page)
         {
-            return await _blogRepository.GetAllPosts();
+            int skip = 0;
+
+            if (page <= 0)
+            {
+                page = 1;
+            }
+
+            if (page > 1)
+            {
+                skip = 2 * (page - 1);
+            }
+
+            return skip;
+        }
+
+        public async Task<List<BlogPost>> GetAllPosts(int page)
+        {
+            int skip = CalculateAdvertToSkip(page);
+            return await _blogRepository.GetAllPosts(skip);
+        }
+
+        public async Task<List<BlogPost>> GetSearchPosts(int page, string word)
+        {
+            int skip = CalculateAdvertToSkip(page);
+
+            return await _blogRepository.GetSearchPosts(skip, word);
+        }
+        public async Task<int> GetCountAllPosts()
+        {
+            return await _blogRepository.GetCountAllPosts();
+        }
+
+        public async Task<int> GetCountSearchPosts(string word)
+        {
+            return await _blogRepository.GetCountSearchPosts(word);
         }
     }
 }
