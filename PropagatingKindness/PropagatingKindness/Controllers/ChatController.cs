@@ -39,7 +39,7 @@ public class ChatController : Controller
     {
         var result = await _chatService.SendMessage(GetUserId(), id, request.Message);
         if (result.Success)
-            return Ok();
+            return Ok(new JsonResult(result.Content));
         return BadRequest();
     }
 

@@ -72,7 +72,7 @@
             </div>
         </section>
         <section style="width: 30%;">
-            <div class="list-group justify-content-around">
+            <div class="list-group" style="text-align:justify;">
                 <a asp-area="" asp-controller="Advert" asp-action="Donation" class="list-group-item list-group-item-action" aria-current="true">
                     Ready to make a difference? Join our movement, donate what you can, or spread the word. Let’s watch kindness grow! 🌍🪴
                 </a>
@@ -108,19 +108,23 @@
 
                     for (int step = 0; step <= carrousselSteps; step++)
                     {
-                        <div class="carousel-item active">
+                        <div class="carousel-item @(step == 0 ? "active" : "")">
                             <div class="cards-wrapper">
 
                                 @for (int card = 0; card < itemsPerCarrousselStep; card++)
                                 {
-                                    int idx = (step * 1) + card;
+                                    int idx = (step * itemsPerCarrousselStep) + card;
+                                    if (idx == Model.Posts.Count)
+                                        break;
+
                                     var blogPost = Model.Posts[idx];
 
-                                    <div class="card @(idx > 0 ? "d-none d-md-block" : "")">
+                                    <div class="card col-md-3 @(idx > 0 ? "d-none d-md-block" : "")">
                                         <img src="@blogPost.Photo" class="card-img-top img-fluid" alt="...">
                                         <div class="card-body">
-                                            <h5 class="card-title">@blogPost.Title</h5>
-                                            <p class="card-text">@blogPost.ShortDescription</p>
+                                            <h5 class="card-title text-center">@blogPost.Title</h5>
+                                            <p style="font-style: italic">Published on: @blogPost.PublicationDate.ToString("MMMM dd, yyyy")</p>
+                                            <p class="card-text" style="text-align:justify;">@blogPost.ShortDescription</p>
                                             <a asp-action="ViewPost" asp-controller="Blog" asp-route-id="@blogPost.Id" class="btn btn-primary">Read more</a>
                                         </div>
                                     </div>
@@ -129,78 +133,6 @@
                         </div>
                     }
                 }
-                @* <div class="carousel-item active">
-                    <div class="cards-wrapper">
-                        <div class="card">
-                            <img src="images/poinsettia.jpg" class="card-img-top img-fluid" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Read more</a>
-                            </div>
-                        </div>
-                        <div class="card d-none d-md-block">
-                            <img src="images/" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Read more</a>
-                            </div>
-                        </div>
-                        <div class="card d-none d-md-block">
-                            <img src="images/" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Read more</a>
-                            </div>
-                        </div>
-                        <div class="card d-none d-md-block">
-                            <img src="images/" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Read more</a>
-                            </div>
-                        </div>
-                    </div>
-                </div> *@
-                @* <div class="carousel-item">
-                    <div class="cards-wrapper">
-                        <div class="card">
-                            <img src="images/" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Read more</a>
-                            </div>
-                        </div>
-                        <div class="card d-none d-md-block">
-                            <img src="images/" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Read more</a>
-                            </div>
-                        </div>
-                        <div class="card d-none d-md-block">
-                            <img src="images/" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Read more</a>
-                            </div>
-                        </div>
-                        <div class="card d-none d-md-block">
-                            <img src="images/" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Read more</a>
-                            </div>
-                        </div>
-                    </div>
-                </div> *@
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel1" data-bs-slide="prev">

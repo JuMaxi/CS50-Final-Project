@@ -71,22 +71,23 @@ public class ChatService : IChatService
         return await _chatRepository.GetChats(userId);
     }
 
-    public async Task<Result> SendMessage(int userId, int chatId, string message)
+    public async Task<Result<Message>> SendMessage(int userId, int chatId, string message)
     {
         if (string.IsNullOrWhiteSpace(message))
-            return Result.Fail("Message is empty");
+            return Result<Message>.Fail("Message is empty");
 
         var chat = await _chatRepository.GetChatWithMessages(chatId);
         if (userId != chat.FromUser.Id && userId != chat.ToUser.Id)
         {
-            return Result.Fail("Chat does not belog to the user");
+            return Result<Message>.Fail("Chat does not belog to the user");
         }
 
         var user = await _userRepository.GetById(userId);
         if (user is null)
-            return Result.Fail("User not found");
+            return Result<Message>.Fail("User not found");
 
         chat.AddMessage(user, message);
-        return Result.OK;
+        await _chatRepository.Update(chat);
+        return new Result<Message>(chat.Messages.Last());
     }
 }

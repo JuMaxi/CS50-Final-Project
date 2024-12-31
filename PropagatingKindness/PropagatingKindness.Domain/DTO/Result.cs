@@ -40,4 +40,7 @@ public class Result<T> : Result
     {
         Content = content;
     }
+
+    public static Result<T> OK => new Result<T>(true, string.Empty);
+    public static Result<T> Fail(string msg) => new Result<T>(false, msg);
 }

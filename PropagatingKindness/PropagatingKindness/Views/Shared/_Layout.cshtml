@@ -41,6 +41,15 @@
                 {
                     var username = ViewContext.HttpContext.User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
 
+                    var accessLevel = ViewContext.HttpContext.User.Claims.First(x => x.Type == ClaimTypes.GroupSid).Value;
+
+                    if (accessLevel == "3")
+                    {
+                        <a asp-area="" asp-controller="Blog" asp-action="CreatePost" class="btn btn-light btn-sm" aria-current="true">
+                            <i class="bi bi-plus-circle me-2"></i>Create Post
+                        </a>
+                    }
+
                     var photo = ViewBag.UserAvatar;
 
                     <div>
@@ -52,7 +61,7 @@
                         </a>
                         <ul class="user-dropdown-menu list-unstyled p-2 m-1">
                             <li><a asp-area="" asp-controller="Advert" asp-action="MyAdverts" class="dropdown-item p-1">My Adverts</a></li>
-                            <li><a class="dropdown-item p-1">Messages</a></li>
+                            <li><a asp-controller="Chat" asp-action="MyConversations" class="dropdown-item p-1">Messages</a></li>
                             <li><a asp-area="" asp-controller="Account" asp-action="ManageAccount" class="dropdown-item p-1">Manage Account</a></li>
                             <li><a asp-area="" asp-controller="Account" asp-action="Logout" class="dropdown-item p-1">Logout</a></li>
                         </ul>

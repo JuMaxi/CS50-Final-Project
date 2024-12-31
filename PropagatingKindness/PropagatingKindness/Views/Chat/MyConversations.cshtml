@@ -10,20 +10,18 @@
             { 
                 <li class="list-group-item chat-conversation" chat-id="@conversation.Id">Chat with @conversation.UserName</li>
             }
-            @* <li class="list-group-item">Chat with Bob</li>
-            <li class="list-group-item">Chat with Charlie</li>
-            <li class="list-group-item">Chat with Dave</li> *@
+           
         </ul>
     </div>
     <!-- Right Panel: Chat Window -->
     <div class="col-md-8 chat-window">
-        <div class="chat-header">
-            <img src="https://propagatekindnessimgs.blob.core.windows.net/adverts/09b2ac5ce17148f089f93cbb611e7821.jpg" alt="Header Image">
-            <h5 class="mb-0">Mais um teste</h5>
+        <div class="chat-header" id="chat-header">
+            @* <img src="https://propagatekindnessimgs.blob.core.windows.net/adverts/09b2ac5ce17148f089f93cbb611e7821.jpg" alt="Header Image">
+            <h5 class="mb-0">Mais um teste</h5> *@
         </div>
         <!-- Chat Messages -->
-        <div class="chat-messages">
-            <div class="chat-message sent">
+        <div class="chat-messages" id="chat-messages">
+            @* <div class="chat-message sent">
                 <div class="chat-bubble sent">
                     Hi Alice, how are you?
                     <i class="bi bi-eye-fill bubble-icon chat-bubble-status-sent"></i>
@@ -43,12 +41,14 @@
                     <i class="bi bi-eye-fill bubble-icon chat-bubble-status-sent"></i>
                 </div>
                 <img src="https://cdn-icons-png.flaticon.com/512/3237/3237472.png" alt="User Avatar" class="avatar">
-            </div>
+            </div> *@
         </div>
         <!-- Input Area -->
         <div class="chat-input d-flex">
-            <input type="text" class="form-control me-2" placeholder="Type a message...">
-            <button class="btn btn-primary">Send</button>
+            <input type="text" class="form-control me-2" placeholder="Type a message..." id="message-input">
+            <button class="btn btn-primary" onclick="sendMessage" id="button-send">Send</button>
         </div>
     </div>
 </div>
+
+<script src="/js/chat.js"></script>

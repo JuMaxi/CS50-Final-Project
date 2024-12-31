@@ -98,7 +98,7 @@ namespace PropagatingKindness.Controllers
                 var result = await _blogService.CreatePost(dto, GetUserId());
 
                 if (result.Success)
-                    return View();
+                    return View(new CreatePostViewModel());
             }
             return RedirectToAction("Home", "Index");
         }

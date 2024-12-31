@@ -21,6 +21,7 @@ namespace PropagatingKindness.Models.Home
         public string Title { get; set; }
         public string ShortDescription { get; set; }
         public string Photo { get; set; }
+        public DateTime PublicationDate { get; set; }
 
         public static CarrousselBlogPost FromBlogPost(BlogPost blogPost)
         {
@@ -29,7 +30,8 @@ namespace PropagatingKindness.Models.Home
                 Title = blogPost.Title,
                 ShortDescription = blogPost.ShortDescription,
                 Photo = blogPost.CoverPhoto,
-                Id = blogPost.Id
+                Id = blogPost.Id,
+                PublicationDate = blogPost.Date
             };
         }
     }
