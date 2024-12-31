@@ -30,8 +30,9 @@ public class ChatRepository : IChatRepository
         return await _dbContext.Chats
             .Include(c => c.FromUser)
             .Include(c => c.ToUser)
-            .Include(c => c.Advert)
             .Include(c => c.Messages)
+            .Include(c => c.Advert)
+            .ThenInclude(a => a.Photos)
             .FirstOrDefaultAsync(x => x.Id == chatId);
     }
 

@@ -66,29 +66,30 @@ function sendMessage() {
     disableSending();
     var input = document.getElementById('message-input');
 
-    return new Promise((resolve, reject) => {
-        fetch(`/Chat/SendMessage/${lastChat}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ Message: input.value })
-        })
-        .then(response => {
-            if (!response.ok) {
-                return reject(`Failed with status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            const messageElement = createMessageBalloon(data);
-            document.getElementById("chat-messages").appendChild(messageElement);
-            enableSending();
-        })
-        .catch(error => {
-            alert(`Error sending message: ${error}`);
-            enableSending();
-        });
+    fetch(`/Chat/SendMessage/${lastChat}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ Message: input.value })
+    })
+    .then(response => {
+        if (!response.ok) {
+            console.error("Failed to fetch messages", response.status);
+            return Promise.reject();
+        }
+        return response.json();
+    })
+    .then(data => {
+        const messageElement = createMessageBalloon(data);
+        document.getElementById("chat-messages").appendChild(messageElement);
+        input.value = '';
+        enableSending();
+    })
+    .catch(error => {
+        alert(`Error sending message: ${error}`);
+        input.value = '';
+        enableSending();
     });
 }
 
@@ -125,7 +126,7 @@ function getMessages(id) {
 
                 // Filter new messages based on mostRecentDateTime
                 const newMessages = data.messages.filter(message => {
-                    const messageDateTime = new Date(message.DateTime);
+                    const messageDateTime = new Date(message.dateTime);
                     return !mostRecentDateTime || messageDateTime > new Date(mostRecentDateTime);
                 });
 
