@@ -32,9 +32,9 @@ namespace PropagatingKindness.Infra.Repository
                 .Include(a => a.Content)
                 .Include(b => b.Tags)
                 .Where(c => c.Tags.Any(t => t.Text == tag))
+                .OrderByDescending(d => d.Date)
                 .Skip(skip)
                 .Take(2)
-                .OrderByDescending(d => d.Date)
                 .ToListAsync();
         }
         public async Task<int> GetCountAllPosts()
@@ -55,9 +55,9 @@ namespace PropagatingKindness.Infra.Repository
         {
             return await _dbContext.Blogs
                 .Include(b => b.Content)
+                .OrderByDescending(a => a.Date)
                 .Skip(skip)
                 .Take(take)
-                .OrderByDescending(a => a.Date)
                 .ToListAsync();
         }
     }
