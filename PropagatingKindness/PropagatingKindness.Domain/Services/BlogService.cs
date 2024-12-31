@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PropagatingKindness.Domain.DTO;
+﻿using PropagatingKindness.Domain.DTO;
 using PropagatingKindness.Domain.Interfaces;
 using PropagatingKindness.Domain.Models;
 
@@ -11,6 +6,7 @@ namespace PropagatingKindness.Domain.Services
 {
     public class BlogService : IBlogService
     {
+        public const int ItemsPerPage = 2;
         private readonly IBlogRepository _blogRepository;
         private readonly IUserRepository _userRepository;
 
@@ -78,23 +74,23 @@ namespace PropagatingKindness.Domain.Services
         public async Task<List<BlogPost>> GetAllPosts(int page)
         {
             int skip = CalculateAdvertToSkip(page);
-            return await _blogRepository.GetAllPosts(skip);
+            return await _blogRepository.GetAllPosts(skip, ItemsPerPage);
         }
 
-        public async Task<List<BlogPost>> GetSearchPosts(int page, string word)
+        public async Task<List<BlogPost>> GetSearchPosts(int page, string tag)
         {
             int skip = CalculateAdvertToSkip(page);
 
-            return await _blogRepository.GetSearchPosts(skip, word);
+            return await _blogRepository.GetSearchPosts(skip, tag);
         }
         public async Task<int> GetCountAllPosts()
         {
             return await _blogRepository.GetCountAllPosts();
         }
 
-        public async Task<int> GetCountSearchPosts(string word)
+        public async Task<int> GetCountSearchPosts(string tag)
         {
-            return await _blogRepository.GetCountSearchPosts(word);
+            return await _blogRepository.GetCountSearchPosts(tag);
         }
     }
 }

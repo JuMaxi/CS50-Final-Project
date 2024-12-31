@@ -46,6 +46,26 @@ namespace PropagatingKindness.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Search(int page, string tag)
+        {
+            if (string.IsNullOrWhiteSpace(tag))
+            {
+                return View("Index", "Home");
+            }
+
+            if (page == 0)
+            {
+                page = 1;
+            }
+
+            int count = await _blogService.GetCountSearchPosts(tag);
+
+            var posts = await _blogService.GetSearchPosts(page, tag);
+
+            return View(SearchPostsViewModel.FromBlogPosts(posts, count, page, tag));
+        }
+
+        [HttpGet]
         public IActionResult CreatePost()
         {
             return View();

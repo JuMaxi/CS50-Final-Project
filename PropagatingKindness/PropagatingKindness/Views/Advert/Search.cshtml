@@ -42,7 +42,7 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 <li class="page-item @(Model.CurrentPage == 1 ? "disabled":"")">
-                    <a class="page-link" href="?page=@(Model.CurrentPage - 1)">Previous</a>
+                    <a class="page-link" href="?page=@(Model.CurrentPage - 1)&word=@Model.KeyWord">Previous</a>
                 </li>
                 @{
                     int count = Model.TotalAdverts / 16;
@@ -53,12 +53,12 @@
                     for (int i = 0; i <= count; i++)
                     {
                         <li class="page-item">
-                            <a class="page-link @(Model.CurrentPage - 1 == i ? "active":"")" href="?page=@(i + 1)">@(i + 1)</a>
+                            <a class="page-link @(Model.CurrentPage - 1 == i ? "active":"")" href="?page=@(i + 1)&word=@Model.KeyWord">@(i + 1)</a>
                         </li>
                     }
                 }
                 <li class="page-item @(Model.CurrentPage - 1 == count ? "disabled":"")">
-                    <a class="page-link" href="?page=@(Model.CurrentPage + 1)">Next</a>
+                    <a class="page-link" href="?page=@(Model.CurrentPage + 1)&word=@Model.KeyWord">Next</a>
                 </li>
             </ul>
         </nav>

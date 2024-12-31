@@ -1,10 +1,37 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-<div class="container mt-5">
-    <h1 class="text-center mb-4">Giving away a plant, seeds or garden tools?</h1>
-    <p>Some text here</p>
-    <a asp-area="" asp-controller="Advert" asp-action="Donation" class="btn btn-primary btn-sm" aria-current="true">
-        <i class="bi bi-plus-circle me-2"></i>Create Advert
-    </a>
+<div class="container mt-5 w-75">
+    <div class="text-center">
+        <h1 class="text-center mb-4"><b>Propagate Kindness</b></h1>
+        <h2 class="m-3">
+            Donate and Cultivate Hope!
+        </h2>
+    </div>
+    <div class="text-center">
+        <p>
+            Imagine a world where every community corner blossoms with vibrant flowers, lush greenery,
+            and thriving vegetable patches, a world where everyone, regardless of resources, can feel the
+            joy of nurturing life through gardening. You can help make this vision a reality!
+        </p>
+
+        <p>
+            By donating plants, gardening tools, soil, or seeds, you’re not just giving objects—you’re sowing opportunities.
+            You’re empowering someone to grow their own food, beautify their environment, and connect with nature.
+            Every pot of soil, every spare spade, and every sprouting plant has the potential to change lives and uplift spirits.
+        </p>
+
+        <p>
+            Donating is an act of kindness that keeps giving. That little potted plant you share could spark a love for gardening in a child.
+            That bag of soil might help a family grow their first home garden. And those tools collecting dust in your garage could become a lifeline for a community garden.
+        </p>
+
+        <p>
+            Join this movement of generosity! Let’s transform empty spaces into lush gardens, and lonely hearts into joyful gardeners.
+            Donate today and be part of a blooming future. Together, we can cultivate a greener, kinder world—one plant at a time! 🌱🌸🌍
+        </p>
+        <a asp-area="" asp-controller="Advert" asp-action="CreateAdvert" class="btn btn-primary btn-sm" aria-current="true">
+            <i class="bi bi-plus-circle me-2"></i>Create Advert
+        </a>
+    </div>
 </div>

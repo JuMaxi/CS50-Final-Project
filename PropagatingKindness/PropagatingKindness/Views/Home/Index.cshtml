@@ -1,6 +1,4 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model PropagatingKindness.Models.Home.IndexViewModel
 
 <!-- Sub-menu -->
 <aside class="container main-content mx-auto">
@@ -9,10 +7,13 @@
             <div class="container mx-auto text-left">
                 <div class="dropdown d-inline-block">
                     <button class="btn dropdown-toggle borderless-btn" type="button" id="curiosities" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Curiosities
+                        Plants
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownCuriosities">
-                        <li><a asp-area="" asp-controller="Blog" asp-action="All" class="dropdown-item">Month Plant</a></li>
+                        <li><a asp-area="" asp-controller="Blog" asp-action="Search" asp-route-tag="gardening" class="dropdown-item">Gardening</a></li>
+                        <li><a asp-area="" asp-controller="Blog" asp-action="Search" asp-route-tag="holidays" class="dropdown-item">Holidays</a></li>
+                        <li><a asp-area="" asp-controller="Blog" asp-action="Search" asp-route-tag="houseplants" class="dropdown-item">House Plants</a></li>
+                        <li><a asp-area="" asp-controller="Blog" asp-action="Search" asp-route-tag="tropical plants" class="dropdown-item">Tropical Plants</a></li>
                     </ul>
                 </div>
                 <div class="dropdown d-inline-block">
@@ -20,7 +21,10 @@
                         Reviews
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownReviews">
-                        <li><a class="dropdown-item" href="#">Option 1</a></li>
+                        <li><a asp-area="" asp-controller="Blog" asp-action="Search" asp-route-tag="fertilizers" class="dropdown-item">Fertilizers</a></li>
+                        <li><a asp-area="" asp-controller="Blog" asp-action="Search" asp-route-tag="plant care" class="dropdown-item">Plant Care</a></li>
+                        <li><a asp-area="" asp-controller="Blog" asp-action="Search" asp-route-tag="tools" class="dropdown-item">Tools</a></li>
+                        <li><a asp-area="" asp-controller="Blog" asp-action="Search" asp-route-tag="compost" class="dropdown-item">Compost</a></li>
                     </ul>
                 </div>
                 <div class="dropdown d-inline-block">
@@ -28,7 +32,10 @@
                         Sustainability
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownSustainability">
-                        <li><a class="dropdown-item" href="#">Option 1</a></li>
+                        <li><a asp-area="" asp-controller="Blog" asp-action="Search" asp-route-tag="composting" class="dropdown-item">Composting</a></li>
+                        <li><a asp-area="" asp-controller="Blog" asp-action="Search" asp-route-tag="nature" class="dropdown-item">Nature</a></li>
+                        <li><a asp-area="" asp-controller="Blog" asp-action="Search" asp-route-tag="pest control" class="dropdown-item">Pest Control</a></li>
+                        <li><a asp-area="" asp-controller="Blog" asp-action="Search" asp-route-tag="recycling" class="dropdown-item">Recycling</a></li>
                     </ul>
                 </div>
             </div>
@@ -50,21 +57,24 @@
             <div class="row">
                 <div class="col-sm-11 mb-3 mb-sm-0">
                     <div class="cardMain">
-                        <div class="cardMain-body">
-                            <h5 class="cardMain-title text-center">Plants need a new home</h5>
-                            <p class="cardMain-text">With supporting text below as a natural lead-in to additional content.</p>
-                                <a asp-area="" asp-controller="Advert" asp-action="All">
-                                    <img src="images/Houseplants.jpg" class="card-img-top img-fluid" alt="...">
-                                </a>
+                        <div class="cardMain-body text-center">
+                            <h2 class="cardMain-title text-center">🌱 Sharing the Bloom! 🌿</h2>
+                            <h3 class="cardMain-text m-2">
+                                Our community is donating plants, tools, soil, and seeds to transform spaces (and homes)
+                                into thriving gardens.
+                            </h3>
+                            <a asp-area="" asp-controller="Advert" asp-action="All">
+                                <img src="/images/sharing-plant.jpg" class="card-img-top img-fluid" alt="...">
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
         <section style="width: 30%;">
-            <div class="list-group">
+            <div class="list-group justify-content-around">
                 <a asp-area="" asp-controller="Advert" asp-action="Donation" class="list-group-item list-group-item-action" aria-current="true">
-                    Giving away a plant, seeds or garden tools?
+                    Ready to make a difference? Join our movement, donate what you can, or spread the word. Let’s watch kindness grow! 🌍🪴
                 </a>
             </div>
 
@@ -72,7 +82,7 @@
                 <div class="col-sm-12 mb-3 mb-sm-0">
                     <div class="cardMainSecond">
                         <div class="cardMainSecond-body">
-                            <a href="https://www.w3schools.com/html/tryit.asp?filename=tryhtml_links_image">
+                            <a href="">
                                 <img src="images/Houseplants.jpg" class="card-img-top" alt="...">
                             </a>
                             <h5 class="cardMainSecond-title text-center">Do you want to support your local community?</h5>
@@ -90,7 +100,36 @@
         <h2 class="text-center">Gardening and Plants</h2>
         <div id="myCarousel1" class="carousel slide">
             <div class="carousel-inner">
-                <div class="carousel-item active">
+                @{
+                    int itemsPerCarrousselStep = 4;
+                    int carrousselSteps = Model.Posts.Count / itemsPerCarrousselStep;
+                    if (Model.Posts.Count % itemsPerCarrousselStep == 0)
+                        carrousselSteps--;
+
+                    for (int step = 0; step <= carrousselSteps; step++)
+                    {
+                        <div class="carousel-item active">
+                            <div class="cards-wrapper">
+
+                                @for (int card = 0; card < itemsPerCarrousselStep; card++)
+                                {
+                                    int idx = (step * 1) + card;
+                                    var blogPost = Model.Posts[idx];
+
+                                    <div class="card @(idx > 0 ? "d-none d-md-block" : "")">
+                                        <img src="@blogPost.Photo" class="card-img-top img-fluid" alt="...">
+                                        <div class="card-body">
+                                            <h5 class="card-title">@blogPost.Title</h5>
+                                            <p class="card-text">@blogPost.ShortDescription</p>
+                                            <a asp-action="ViewPost" asp-controller="Blog" asp-route-id="@blogPost.Id" class="btn btn-primary">Read more</a>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+                @* <div class="carousel-item active">
                     <div class="cards-wrapper">
                         <div class="card">
                             <img src="images/poinsettia.jpg" class="card-img-top img-fluid" alt="...">
@@ -125,8 +164,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="carousel-item">
+                </div> *@
+                @* <div class="carousel-item">
                     <div class="cards-wrapper">
                         <div class="card">
                             <img src="images/" class="card-img-top" alt="...">
@@ -161,7 +200,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> *@
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel1" data-bs-slide="prev">
