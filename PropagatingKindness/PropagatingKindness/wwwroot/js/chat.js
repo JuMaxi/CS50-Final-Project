@@ -113,6 +113,7 @@ function getMessages(id) {
 
     let newChat = id != lastChat;
     if (newChat) {
+        mostRecentDateTime = null;
         disableSending();
         clearHeader();
         clearMessages();

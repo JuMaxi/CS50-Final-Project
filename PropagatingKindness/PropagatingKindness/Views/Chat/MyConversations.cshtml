@@ -14,8 +14,8 @@
         <h5 class="p-3 border-bottom">Chats</h5>
         <ul class="list-group list-group-flush">
             @foreach (var conversation in Model.Conversations)
-            { 
-                <li class="list-group-item chat-conversation" chat-id="@conversation.Id">Chat with @conversation.UserName</li>
+            {
+                    <li class="list-group-item chat-conversation" chat-id="@conversation.Id"><a href="javascript:getMessages(@conversation.Id)">Chat with @conversation.UserName</a></li>
             }
            
         </ul>
