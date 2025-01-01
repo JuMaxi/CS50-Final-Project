@@ -1,7 +1,9 @@
 # CS50 Final Project - Propagate Kindness
 Propagate Kindness is a platform where plant parents can donate gardening items, connect with other green fingers, and read about plants and sustainability.
 
-### Summary
+#### Video Demo: [PropagateKindness](https://youtu.be/1oirRXC_c1Y)
+
+#### Description
 This project is a community portal designed to help people connect with one another. If someone is in need of plants or gardening items, they can browse advertisements posted by fellow community members and contact the owners to arrange a collection of the items. All items are free and based on donations.
 
 The website also features a blog that provides content related to gardening and sustainability. 
@@ -41,6 +43,8 @@ For this project, I'm using:
  - [Entity Framework](https://learn.microsoft.com/en-us/ef/) for database migration and data access
  - [Result Pattern](https://code-maze.com/aspnetcore-result-pattern/) instead of exceptions for error and validation
 
+
+### Usage
 #### Visitor
 Visitors can navigate the website without needing to log in or create an account. While browsing advertisements, visitors can view both Available and Promised items. Navigation can be done by clicking on the main card on the home page or by using the search bar to type in a keyword.
 Visitors or Users can access this through a dropdown menu or view the latest eight posts displayed in a carousel at the bottom of the home page. 
@@ -57,7 +61,7 @@ Visitors or Users can access this through a dropdown menu or view the latest eig
 ##### Visitor View - Dropdown Menu to blog contents
 ![VisitorDropDownMenuHomePage](./Images/Visitor-View-4-HomePage-DropDownMenu-Blog.png)
 
-##### Visitor View - Posts com pagination
+##### Visitor View - Posts with pagination
 ![VisitorViewPostsPaginationHomePage](./Images/Visitor-View-5-HomePage-Posts-Pagination.png)
 
 ##### Visitor View - Last eight Post Publications - Carrousel
@@ -101,7 +105,6 @@ Logged-in users can also view their own advertisements and check or change their
 ##### User View - Create Advert Displaying Model Validations
 ![UserCreateAdvertValidations](./Images/User-CreateAdvert-Validations.png)
 
-
 #### Adverts
 ##### Advert View 
 ![Advert](./Images/Advert-View.png)
@@ -117,8 +120,6 @@ Visitor and users have access to read the posts. Only the admin user can create 
 ##### Post View
 ![Post](./Images/Post-View.png)
 
-
-### Usage
 
 ### Next Steps
 I plan to add more features to the portal, including:
@@ -360,8 +361,3 @@ On a bare minimum, in order to run the project you'll need:
 ```
 
 After that, you should be able to run the project.
-
-
-### About CS50
-
-### Links
